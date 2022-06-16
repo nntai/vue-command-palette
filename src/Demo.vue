@@ -1,10 +1,9 @@
 <template>
-  <command-pallete class="command-pallete"/>
+  <command-pallete class="command-pallete" />
 </template>
 
 <script setup lang="ts">
-import CommandPallete from './CommandPallete.vue';
-
+import CommandPallete from "./CommandPallete.vue";
 </script>
 
 <style>
@@ -23,6 +22,7 @@ body {
   padding: 8px;
 }
 .command-pallete {
-  flex: 1;
+  background-color: #111111;
+  padding: 17px 17px 17px 17px;
 }
 </style>
