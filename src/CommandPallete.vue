@@ -1,8 +1,8 @@
 <template>
   <div class="command-pallete-place">
     <div class="command-pallete-wrapper" v-click-outside="closePlace">
-      <cmp-input class="cmp-input" />
-      <cmp-list class="cmp-list" />
+      <cmp-input class="cmp-input" v-bind:inputText="textInputController" />
+      <cmp-list class="cmp-list" v-bind:customerCommands="commandsController.customerCommands.value" />
     </div>
   </div>
 </template>
@@ -10,12 +10,17 @@
 import CmpInput from "./components/CmpInput.vue";
 import CmpList from "./components/CmpList.vue";
 
-import keysController from "./controllers/keysController.ts";
+import keysController from "./controllers/keysController";
+
+import customerInputController from "./controllers/customerInputController";
+
+import customerCommandController from "./controllers/customerCommandController";
 
 import { onMounted, computed, watch, ref } from "vue";
 
 const keysInputController = keysController();
-
+const textInputController = customerInputController();
+const commandsController = customerCommandController();
 const modalStyle = ref("none");
 
 const vClickOutside = {
@@ -66,6 +71,12 @@ const props = defineProps({
     type: String,
     default: "Control+k",
   },
+  customerCommands: {
+    type: Object,
+    default: function(placeProps) {
+      return [];
+    }
+  }
 });
 
 watch(keyCount, (value) => {
@@ -79,6 +90,13 @@ watch(keyCount, (value) => {
     }
   }
 });
+
+  watch(textInputController.customerInput, (value) => {
+
+
+
+    commandsController.getCustomerCommands(value, props.customerCommands);
+  });
 </script>
 <style scoped>
 .command-pallete-wrapper {

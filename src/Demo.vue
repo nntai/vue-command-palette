@@ -1,5 +1,5 @@
 <template>
-  <command-pallete class="command-pallete" />
+  <command-pallete class="command-pallete" v-bind:customerCommands="[{commandName: 'place', commandKey: 'm', commandAction: () => {}}]" />
 </template>
 
 <script setup lang="ts">
