@@ -17,6 +17,7 @@ module.exports = {
     'jest',
     'vue',
     '@typescript-eslint',
+    'vitest'
   ],
   rules: {
     'vue/multi-word-component-names': 'off',

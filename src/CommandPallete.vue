@@ -1,6 +1,6 @@
 <template>
-  <div class="command-pallete-place">
-    <div class="command-pallete-wrapper" v-click-outside="closePlace">
+  <div v-show="customerModalController.isModal.value" class="command-pallete-place">
+    <div class="command-pallete-wrapper" v-click-outside="customerModalController.closeModal">
       <cmp-input class="cmp-input" v-bind:inputText="textInputController" />
       <cmp-list class="cmp-list" v-bind:customerCommands="commandsController.customerCommands.value" />
     </div>
@@ -16,55 +16,12 @@ import customerInputController from "./controllers/customerInputController";
 
 import customerCommandController from "./controllers/customerCommandController";
 
+import modalController from "./controllers/modalController";
+
 import { onMounted, computed, watch, ref } from "vue";
 
-const keysInputController = keysController();
-const textInputController = customerInputController();
-const commandsController = customerCommandController();
-const modalStyle = ref("none");
+import {vClickOutside} from "./directives/vClickOutside";
 
-const vClickOutside = {
-  beforeMount(el, binding, vnode) {
-    el.eventSetDrag = function () {
-      el.setAttribute("data-dragging", "yes");
-    };
-    el.eventClearDrag = function () {
-      el.removeAttribute("data-dragging");
-    };
-    el.eventOnClick = function (event) {
-      var dragging = el.getAttribute("data-dragging");
-      // Check that the click was outside the el and its children, and wasn't a drag
-      if (!(el == event.target || el.contains(event.target)) && !dragging) {
-        // call method provided in attribute value
-        binding.value(event);
-      }
-    };
-    document.addEventListener("touchstart", el.eventClearDrag);
-    document.addEventListener("touchmove", el.eventSetDrag);
-    document.addEventListener("click", el.eventOnClick);
-    document.addEventListener("touchend", el.eventOnClick);
-  },
-  unmounted(el) {
-    document.removeEventListener("touchstart", el.eventClearDrag);
-    document.removeEventListener("touchmove", el.eventSetDrag);
-    document.removeEventListener("click", el.eventOnClick);
-    document.removeEventListener("touchend", el.eventOnClick);
-    el.removeAttribute("data-dragging");
-  },
-};
-
-const closePlace = () => {
-  modalStyle.value = "none";
-};
-
-onMounted(() => {
-  window.addEventListener("keydown", keysInputController.onKeyDownInput);
-  window.addEventListener("keyup", keysInputController.onKeyUpInput);
-});
-
-const keyCount = computed(() => {
-  return keysInputController.keys.value.length;
-});
 
 const props = defineProps({
   modalKey: {
@@ -79,24 +36,10 @@ const props = defineProps({
   }
 });
 
-watch(keyCount, (value) => {
-  if (0 < value) {
-    if (keysInputController.isCustomerKey(props.modalKey)) {
-      modalStyle.value = "block";
-    }
-
-    if (keysInputController.isCloseKey()) {
-      modalStyle.value = "none";
-    }
-  }
-});
-
-  watch(textInputController.customerInput, (value) => {
-
-
-
-    commandsController.getCustomerCommands(value, props.customerCommands);
-  });
+const customerModalController = modalController();
+const keysInputController = keysController(customerModalController.onModalChange, props.modalKey);
+const textInputController = customerInputController();
+const commandsController = customerCommandController(textInputController.customerInput, props.customerCommands);
 </script>
 <style scoped>
 .command-pallete-wrapper {
@@ -111,7 +54,6 @@ watch(keyCount, (value) => {
   left: 0;
   right: 0;
   bottom: 0;
-  display: v-bind("modalStyle");
 }
 .cmp-input,
 .cmp-list {

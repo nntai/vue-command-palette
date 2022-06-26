@@ -1,11 +1,13 @@
-import { ref, Ref } from "vue";
+import { ref, Ref, computed, watch, onMounted } from "vue";
 
-import firstPlace from "../places/firstPlace";
+import { isText } from "../places/firstPlace";
 
-export default function keysController() {
+export default function keysController(
+  onModalChange: Function,
+  modalKey: string
+) {
   const keys: Ref<string[]> = ref([]);
 
-  const firstPlaceActions = firstPlace();
   const closeKey: string = "Escape";
 
   function addKey(key: string) {
@@ -47,7 +49,7 @@ export default function keysController() {
   function isCustomerKey(key: string) {
     let isIn: boolean = false;
 
-    if (firstPlaceActions.isText(keys.value, key)) {
+    if (isText(keys.value, key)) {
       isIn = true;
     }
 
@@ -63,6 +65,27 @@ export default function keysController() {
 
     return isIn;
   }
+
+  onMounted(() => {
+    window.addEventListener("keydown", onKeyDownInput);
+    window.addEventListener("keyup", onKeyUpInput);
+  });
+
+  const keyCount = computed(() => {
+    return keys.value.length;
+  });
+
+  watch(keyCount, (value) => {
+    if (0 < value) {
+      if (isCustomerKey(modalKey)) {
+        onModalChange(true);
+      }
+
+      if (isCloseKey()) {
+        onModalChange(false);
+      }
+    }
+  });
 
   return {
     keys,

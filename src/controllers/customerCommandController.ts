@@ -1,6 +1,13 @@
-import { ref, Ref } from "vue";
+import { ref, watch, Ref } from "vue";
 
-export default function customerCommandController() {
+export default function customerCommandController(
+  textInput: Ref<string>,
+  commandsInput: {
+    commandName: string;
+    commandKey: string;
+    commandAction: Function;
+  }[]
+) {
   const customerCommands: Ref<
     { commandName: string; commandKey: string; commandAction: Function }[]
   > = ref([]);
@@ -29,6 +36,10 @@ export default function customerCommandController() {
 
     customerCommands.value = commands;
   }
+
+  watch(textInput, (value) => {
+    getCustomerCommands(value, commandsInput);
+  });
 
   return {
     customerCommands,
