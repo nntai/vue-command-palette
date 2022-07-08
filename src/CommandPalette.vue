@@ -42,7 +42,7 @@ const textInputController = customerInputController();
 const commandsController = customerCommandController(textInputController.customerInput, props.customerCommands);
 </script>
 <style scoped>
-.command-pallete-wrapper {
+.command-palette-wrapper {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;

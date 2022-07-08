@@ -20,9 +20,6 @@
 <style scoped>
   
 
-
-
-
   .cmp-list {
     display: inline-block;
     width: 50%;
@@ -32,12 +29,6 @@
   #cmp-list-left {
     text-align: left;
   }
-
-
-
-
-
-
 
 
   #cmp-list-right {
