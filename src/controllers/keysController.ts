@@ -4,7 +4,12 @@ import { isText } from "../places/firstPlace";
 
 export default function keysController(
   onModalChange: Function,
-  modalKey: string
+  modalKey: string,
+  customerCommands: {
+    commandName: string;
+    commandKey: string;
+    commandAction: Function;
+  }[]
 ) {
   const keys: Ref<string[]> = ref([]);
 
@@ -77,12 +82,28 @@ export default function keysController(
 
   watch(keyCount, (value) => {
     if (0 < value) {
+      let isIn: boolean = false;
+
       if (isCustomerKey(modalKey)) {
         onModalChange(true);
+        isIn = true;
       }
 
       if (isCloseKey()) {
         onModalChange(false);
+        isIn = true;
+      }
+
+      for (let i: number = 0; i < customerCommands.length; ++i) {
+        if (isCustomerKey(customerCommands[i].commandKey)) {
+          customerCommands[i].commandAction();
+
+          isIn = true;
+        }
+      }
+
+      if (isIn) {
+        keys.value = [];
       }
     }
   });

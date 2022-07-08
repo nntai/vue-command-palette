@@ -37,7 +37,7 @@ const props = defineProps({
 });
 
 const customerModalController = modalController();
-const keysInputController = keysController(customerModalController.onModalChange, props.modalKey);
+const keysInputController = keysController(customerModalController.onModalChange, props.modalKey, props.customerCommands);
 const textInputController = customerInputController();
 const commandsController = customerCommandController(textInputController.customerInput, props.customerCommands);
 </script>

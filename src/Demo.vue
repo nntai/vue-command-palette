@@ -1,9 +1,13 @@
 <template>
-  <command-pallete class="command-pallete" v-bind:customerCommands="[{commandName: 'place', commandKey: 'm', commandAction: () => {}}]" />
+  <command-pallete class="command-pallete" v-bind:customerCommands="[{commandName: 'place', commandKey: 'm', commandAction: () => {placeIn();}}]" />
 </template>
 
 <script setup lang="ts">
 import CommandPallete from "./CommandPallete.vue";
+
+  const placeIn = () => {
+    alert("");
+  };
 </script>
 
 <style>
