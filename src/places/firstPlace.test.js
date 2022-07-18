@@ -1,16 +1,16 @@
 import { expect, it } from "vitest";
-import {isText} from "./firstPlace.ts";
+import { isCorrectKey } from "./firstPlace.ts";
 
 describe(
   "is text", () => {
     it(
       "is text", () => {
-        expect(isText(["Control", "k"], "Control+k") == true);
+        expect(isCorrectKey(["Control", "k"], "Control+k") === true);
       }
     );
 
     it("is text", () => {
-      expect(isText(["Control", "k"], "Control k") == false);
+      expect(isCorrectKey(["Control", "k"], "Control k") === false);
     });
   }
 );

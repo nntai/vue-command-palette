@@ -1,8 +1,10 @@
 <template>
-  <div v-show="customerModalController.isModal.value" class="command-pallete-place">
-    <div class="command-pallete-wrapper" v-click-outside="customerModalController.closeModal">
-      <cmp-input class="cmp-input" v-bind:inputText="textInputController" />
-      <cmp-list class="cmp-list" v-bind:customerCommands="commandsController.customerCommands.value" />
+  <div v-show="isModal" class="command-palette-place">
+    <div class="command-palette-wrapper" v-click-outside="closeModal">
+      <form @submit.prevent="onEnterKey">
+        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" />
+        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal" />
+      </form>
     </div>
   </div>
 </template>
@@ -20,7 +22,9 @@ import modalController from "./controllers/modalController";
 
 import { onMounted, computed, watch, ref } from "vue";
 
-import {vClickOutside} from "./directives/vClickOutside";
+import { vClickOutside } from "./directives/vClickOutside";
+
+import Command from "./models/command";
 
 
 const props = defineProps({
@@ -29,18 +33,34 @@ const props = defineProps({
     default: "Control+k",
   },
   customerCommands: {
-    type: Object,
+    type: Array,
     default: function(placeProps) {
       return [];
     }
   }
 });
 
-const customerModalController = modalController();
-const keysInputController = keysController(customerModalController.onModalChange, props.modalKey, props.customerCommands);
-const textInputController = customerInputController();
-const commandsController = customerCommandController(textInputController.customerInput, props.customerCommands);
+const { customerInput, clearText } = customerInputController();
+const { customerCommands, customerCommand, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands);
+const { isModal, onModalChange, closeModal } = modalController(() => { commandRefresh(); clearText(); });
+const onEnterKey = () => {
+  let action: Function = () => {};
+  action = customerCommand.value.getCommandAction();
+  action();
+  closeModal();
+};
+const customerCommandName = computed(() => {
+  return customerCommand.value.getCommandName();
+});
+
+
+
+
+const updateText = (value: string) => {customerInput.value = value;};
+const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommands, previousCustomerCommand, nextCustomerCommand, onEnterKey);
+
 </script>
+
 <style scoped>
 .command-palette-wrapper {
   display: flex;
@@ -48,7 +68,7 @@ const commandsController = customerCommandController(textInputController.custome
   background-color: #ffffff;
   width: 25%;
 }
-.command-pallete-place {
+.command-palette-place {
   position: fixed;
   top: 0;
   left: 0;

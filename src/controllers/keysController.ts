@@ -1,28 +1,33 @@
 import { ref, Ref, computed, watch, onMounted } from "vue";
 
-import { isText } from "../places/firstPlace";
+import { isCorrectKey } from "../places/firstPlace";
+import Command from "../models/command";
 
 export default function keysController(
   onModalChange: Function,
   modalKey: string,
-  customerCommands: {
-    commandName: string;
-    commandKey: string;
-    commandAction: Function;
-  }[]
+  customerCommands: Command[],
+  previousCustomerCommand: Function,
+  nextCustomerCommand: Function,
+  onEnterKey: Function
 ) {
   const keys: Ref<string[]> = ref([]);
 
   const closeKey: string = "Escape";
+  const downKey: string = "ArrowDown";
+
+  const upKey: string = "ArrowUp";
+
+  const enterKey: string = "Enter";
 
   function addKey(key: string) {
-    if (-1 == keys.value.indexOf(key)) {
+    if (keys.value.indexOf(key) == -1) {
       keys.value.push(key);
     }
   }
 
   function deleteKey(key: string) {
-    if (-1 != keys.value.indexOf(key)) {
+    if (keys.value.indexOf(key) != -1) {
       keys.value.splice(keys.value.indexOf(key), 1);
     }
   }
@@ -32,7 +37,7 @@ export default function keysController(
     preventDefault: Function;
     key: string;
   }) {
-    if ("INPUT" != e.target.tagName) {
+    if (e.target.tagName != "INPUT") {
       e.preventDefault();
 
       addKey(e.key);
@@ -44,7 +49,7 @@ export default function keysController(
     preventDefault: Function;
     key: string;
   }) {
-    if ("INPUT" != e.target.tagName) {
+    if (e.target.tagName != "INPUT") {
       e.preventDefault();
 
       deleteKey(e.key);
@@ -54,7 +59,7 @@ export default function keysController(
   function isCustomerKey(key: string) {
     let isIn: boolean = false;
 
-    if (isText(keys.value, key)) {
+    if (isCorrectKey(keys.value, key)) {
       isIn = true;
     }
 
@@ -71,6 +76,36 @@ export default function keysController(
     return isIn;
   }
 
+  function isDownKey() {
+    let isIn: boolean = false;
+
+    if (isCustomerKey(downKey)) {
+      isIn = true;
+    }
+
+    return isIn;
+  }
+
+  function isUpKey() {
+    let isIn: boolean = false;
+
+    if (isCustomerKey(upKey)) {
+      isIn = true;
+    }
+
+    return isIn;
+  }
+
+  function isEnterKey() {
+    let isIn: boolean = false;
+
+    if (isCustomerKey(enterKey)) {
+      isIn = true;
+    }
+
+    return isIn;
+  }
+
   onMounted(() => {
     window.addEventListener("keydown", onKeyDownInput);
     window.addEventListener("keyup", onKeyUpInput);
@@ -81,7 +116,7 @@ export default function keysController(
   });
 
   watch(keyCount, (value) => {
-    if (0 < value) {
+    if (value > 0) {
       let isIn: boolean = false;
 
       if (isCustomerKey(modalKey)) {
@@ -95,11 +130,32 @@ export default function keysController(
       }
 
       for (let i: number = 0; i < customerCommands.length; ++i) {
-        if (isCustomerKey(customerCommands[i].commandKey)) {
-          customerCommands[i].commandAction();
+        if (isCustomerKey(customerCommands[i].getCommandKey())) {
+          let action: Function = () => {};
+
+          action = customerCommands[i].getCommandAction();
+
+          action();
 
           isIn = true;
         }
+      }
+
+      if (isDownKey()) {
+        nextCustomerCommand();
+        isIn = true;
+      }
+
+      if (isUpKey()) {
+        previousCustomerCommand();
+
+        isIn = true;
+      }
+
+      if (isEnterKey()) {
+        onEnterKey();
+
+        isIn = true;
       }
 
       if (isIn) {

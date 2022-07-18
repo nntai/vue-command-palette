@@ -1,13 +1,16 @@
 <template>
-  <command-pallete class="command-pallete" v-bind:customerCommands="[{commandName: 'place', commandKey: 'm', commandAction: () => {placeIn();}}]" />
+  <command-palette class="command-palette" :customerCommands="customerCommands" />
 </template>
 
 <script setup lang="ts">
-import CommandPallete from "./CommandPallete.vue";
+import CommandPalette from "./CommandPalette.vue";
+import Command from "./models/command";
+import { computed } from "vue";
 
-  const placeIn = () => {
-    alert("");
-  };
+  
+  const customerCommands = computed(() => {
+    return [new Command("place", "m", () => {alert("");}), new Command("place place", "b", () => {alert("");}), new Command("place place place", "m+b", () => {alert("");})];
+  });
 </script>
 
 <style>
@@ -25,7 +28,7 @@ body {
   display: flex;
   padding: 8px;
 }
-.command-pallete {
+.command-palette {
   background-color: #111111;
   padding: 17px 17px 17px 17px;
 }
