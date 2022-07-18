@@ -17,9 +17,11 @@ module.exports = {
     'jest',
     'vue',
     '@typescript-eslint',
-    'vitest',
+    'vitest'
   ],
   rules: {
     'vue/multi-word-component-names': 'off',
+    'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
+    'quotes': off
   },
 };

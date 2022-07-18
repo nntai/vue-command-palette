@@ -1,10 +1,16 @@
 <template>
-  <command-palette class="command-palette"/>
+  <command-palette class="command-palette" :customerCommands="customerCommands" />
 </template>
 
 <script setup lang="ts">
-import CommandPalette from './CommandPalette.vue';
+import CommandPalette from "./CommandPalette.vue";
+import Command from "./models/command";
+import { computed } from "vue";
 
+  
+  const customerCommands = computed(() => {
+    return [new Command("place", "m", () => {alert("");}), new Command("place place", "b", () => {alert("");}), new Command("place place place", "m+b", () => {alert("");})];
+  });
 </script>
 
 <style>
@@ -23,6 +29,7 @@ body {
   padding: 8px;
 }
 .command-palette {
-  flex: 1;
+  background-color: #111111;
+  padding: 17px 17px 17px 17px;
 }
 </style>
