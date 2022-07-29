@@ -3,7 +3,18 @@
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
         <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" />
-        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal" />
+        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal">
+        <template v-slot:cmdName="{commandName}">
+          <div>
+            {{ commandName }}
+          </div>
+        </template>
+        <template v-slot:cmdKey="{commandKey}">
+        <div>
+          {{ commandKey }}
+        </div>
+        </template>
+        </cmp-list>
       </form>
     </div>
   </div>
