@@ -2,13 +2,13 @@ import { ref, watch, Ref } from "vue";
 import Command from "../models/command";
 import { getHighlightIndexes } from "../places/highlightText";
 
+import { getHighlightedIndexes } from "../places/highlightedText";
+
 export default function customerCommandController(
   textInput: Ref<string>,
   commandsInput: Command[]
 ) {
-  const customerCommands: Ref<
-    { command: Command; highlightArr: number[][] }[]
-  > = ref([]);
+  const customerCommands: Ref<{command: Command, highlightedIndexes:number[][]}[]> = ref([]);
 
   const customerCommand: Ref<Command> = ref(new Command("", "", () => {}));
 
@@ -18,22 +18,17 @@ export default function customerCommandController(
     textInputValue: string,
     commandsInput: Command[]
   ) {
-    let commands: { command: Command; highlightArr: number[][] }[] = [];
+    let commands: {command: Command, highlightedIndexes:number[][]}[] = [];
 
     const regex = new RegExp(textInputValue);
-
     for (let i: number = 0; i < commandsInput.length; ++i) {
       if (regex.test(commandsInput[i].getCommandName())) {
-        commands.push({
-          command: commandsInput[i],
-          highlightArr:
-            textInputValue != ""
-              ? getHighlightIndexes(
-                  commandsInput[i].getCommandName(),
-                  textInputValue
-                )
-              : [],
-        });
+        if(textInputValue===""){
+          commands.push({command: commandsInput[i], highlightedIndexes:[]});
+        }else{
+          let highlighted = getHighlightedIndexes(commandsInput[i].getCommandName(),textInputValue);
+          commands.push({command: commandsInput[i], highlightedIndexes: highlighted});
+        }
       }
     }
 

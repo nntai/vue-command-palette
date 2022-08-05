@@ -2,8 +2,8 @@
   <div v-show="isModal" class="command-palette-place">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
-        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened" />
-        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal" />
+        <cmp-input class="cmp-input" :isModal="isModalOpened" :customerText="customerInput" @update-text="updateText" />
+        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand"  :closeModal="closeModal" :searchPhrase="customerInput"/>
         <cmp-footer class="cmp-footer" />
       </form>
     </div>
@@ -71,10 +71,9 @@ const isModalOpened = computed(() => {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-
-  width: 50%;
-  border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
 }
 .command-palette-place {
   position: fixed;
@@ -92,6 +91,22 @@ const isModalOpened = computed(() => {
 .cmp-input {
   max-height: 80px;
   border-bottom: #747474 3px solid;
+}
+.cmp-input {
+  max-height: 50px;
+  background: #FFFFFF;
+  mix-blend-mode: normal;
+  /* Gray/200 (Border-B2, Gray-G2, Light-L2)) */
+
+  border: 1px solid #EDEDED;
+
+ box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
+
+}
+.cmp-input:hover{
+  outline: none;
+
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
 }
 .cmp-list {
   margin-top: 10px;

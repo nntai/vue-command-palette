@@ -1,20 +1,33 @@
 <template>
   <div>
-    Cmp List
-    <div v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
-      <command-name :commandName="customerCommand.command.getCommandName()" :highlightArr="customerCommand.highlightArr" class="cmp-list cmp-list-left" />
-      <div class="cmp-list cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
+    <div v-if="customerCommands.length===0 && searchPhrase.length !==0">
+      <NoResult/>
+    </div>
+    <div v-else>
+      <div
+        v-for="(customerCommand, index) in customerCommands"
+        :key="index"
+        :class="{'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName())}"
+        @mouseover="() => {onCommandHovered(index);}"
+        @click="() => {customerCommand.command.getCommandAction()(); closeModal();}"
+      >
+        <cmp-command-name class="cmp-list-modal cmp-list-left" :customerCommandName="customerCommand.command.getCommandName()" :highlightedIndexes="customerCommand.highlightedIndexes"/>
+        <div class="cmp-list cmp-list-modal cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+  import { PropType } from 'vue';
   import Command from "../models/command";
-
   import CommandName from "./CommandName.vue";
-  
+  import resultDisplayController from "../controllers/resultDisplayController";
+  import NoResult from "./NoResult.vue";
+  import CmpCommandName from "./CmpCommandName.vue";
+
   const props = defineProps({
     customerCommands: {
-      type: Array,
+      type: Array as PropType<Command[]>,
       default: function(placeProps) {
         return [];
       }
@@ -34,17 +47,27 @@
       default: function() {
         return "";
       }
+    },
+    searchPhrase: {
+      type: String,
+      default: ""
     }
   });
 
   const isCommandActive = (commandName: string) => {
     return commandName === props.customerCommandName;
   };
+
 </script>
 <style scoped>
-  
 
-  .cmp-list {
+
+.title-name{
+  text-align: left;
+  color: #858B9D;
+  font-family: 'Open Sans';
+}
+  .cmp-list-modal {
     display: inline-block;
     width: 50%;
   }
@@ -52,11 +75,14 @@
 
   .cmp-list-left {
     text-align: left;
+    font-family: 'Open Sans';
   }
 
 
   .cmp-list-right {
     text-align: right;
+    font-family: 'Open Sans';
+    color: #BEC1CB;
   }
 
 
@@ -65,14 +91,14 @@
     color: #ffffff;
   }
 
-  
-  
-  
-  
-  
 
-  
-  
+
+
+
+
+
+
+
   .cmp-list-item {
     width: 100%;
     padding: 3% 2%;
