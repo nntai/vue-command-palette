@@ -1,7 +1,6 @@
 <template>
   <div>
-    Input Component
-    <input type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}"/>
+    <input class="cmp-input-field" placeholder="Select a command or search..." type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}"/>
   </div>
 </template>
 <script setup lang="ts">
@@ -20,6 +19,15 @@
 
 
 </script>
-<style lang="">
+<style scoped>
+.cmp-input-field{
+  display: flex;
+  width: 100%;
+  padding: 10px;
+}
+.cmp-input-field:focus{
+  outline: none;
+  box-shadow: none;
+}
 
 </style>
