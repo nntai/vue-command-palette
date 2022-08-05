@@ -2,8 +2,9 @@
   <div v-show="isModal" class="command-palette-place">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
-        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" />
+        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened" />
         <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal" />
+        <cmp-footer class="cmp-footer" />
       </form>
     </div>
   </div>
@@ -11,7 +12,7 @@
 <script setup lang="ts">
 import CmpInput from "./components/CmpInput.vue";
 import CmpList from "./components/CmpList.vue";
-
+import CmpFooter from "./components/CmpFooter.vue";
 import keysController from "./controllers/keysController";
 
 import customerInputController from "./controllers/customerInputController";
@@ -59,6 +60,10 @@ const customerCommandName = computed(() => {
 const updateText = (value: string) => {customerInput.value = value;};
 const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommands, previousCustomerCommand, nextCustomerCommand, onEnterKey);
 
+const isModalOpened = computed(() => {
+  return {isModalValue: isModal};
+});
+
 </script>
 
 <style scoped>
@@ -66,7 +71,10 @@ const keysInputController = keysController(onModalChange, props.modalKey, props.
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  width: 25%;
+
+  width: 50%;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .command-palette-place {
   position: fixed;
@@ -76,14 +84,18 @@ const keysInputController = keysController(onModalChange, props.modalKey, props.
   bottom: 0;
 }
 .cmp-input,
-.cmp-list {
+.cmp-list,
+.cmp-footer {
   flex: 1;
-  border: 1px solid gray;
+  padding: 4% 3%;
 }
 .cmp-input {
-  max-height: 50px;
+  max-height: 80px;
+  border-bottom: #747474 3px solid;
 }
 .cmp-list {
   margin-top: 10px;
+  width: 100%;
+  border-bottom: #747474 3px solid;
 }
 </style>

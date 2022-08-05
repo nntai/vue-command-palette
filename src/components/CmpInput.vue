@@ -1,25 +1,59 @@
 <template>
-  <div>
+  <div class="cmp-input-place">
     Input Component
-    <input type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}"/>
+    <input type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}" class="input-place" ref="cmpInput" @keydown.down="blurInput" />
   </div>
 </template>
 <script setup lang="ts">
-  
+  import { ref, watch, onMounted, onUpdated } from "vue";
   
   
   const props = defineProps({
     customerText: {
       type: String,
       default: ""
+    },
+    isModal: {
+      type: Object,
+      default: function() {
+        return {};
+      }
     }
   });
 
   const emits = defineEmits(["updateText"]);
   const onInputChanged = (value: string) => {emits("updateText", value);};
+  
+  
+  
+  const cmpInput = ref();
+  const blurInput = ref(() => {});
+  
+  onMounted(() => {
+    blurInput.value = () => {cmpInput.value.blur();};
+  });
+
+
+
+  watch(props.isModal.isModalValue, (value) => {
+    if (value) {
+      setTimeout(() => {cmpInput.value.focus();}, 0);
+    }
+  });
 
 
 </script>
-<style lang="">
+<style scoped>
 
+
+  
+
+
+
+  .input-place {
+    width: 70%;
+    border: none;
+    padding: 1% 1%;
+    font-size: 15px;
+  }
 </style>

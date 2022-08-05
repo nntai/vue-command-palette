@@ -27,9 +27,14 @@ body {
   height: 100vh;
   display: flex;
   padding: 8px;
+
+
+  background-color: #839742
 }
 .command-palette {
-  background-color: #111111;
-  padding: 17px 17px 17px 17px;
+  
+  padding: 15% 0% 0% 30%;
+
+  background: rgba(0, 0, 0,  0.2)
 }
 </style>

@@ -1,14 +1,16 @@
 <template>
   <div>
     Cmp List
-    <div v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.getCommandName())}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.getCommandAction()(); props.closeModal();}">
-      <div class="cmp-list cmp-list-left">{{customerCommand.getCommandName()}}</div>
-      <div class="cmp-list cmp-list-right">{{customerCommand.getCommandKey()}}</div>
+    <div v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
+      <command-name :commandName="customerCommand.command.getCommandName()" :highlightArr="customerCommand.highlightArr" class="cmp-list cmp-list-left" />
+      <div class="cmp-list cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
   import Command from "../models/command";
+
+  import CommandName from "./CommandName.vue";
   
   const props = defineProps({
     customerCommands: {
@@ -62,4 +64,20 @@
     background-color: #111111;
     color: #ffffff;
   }
+
+  
+  
+  
+  
+  
+
+  
+  
+  .cmp-list-item {
+    width: 100%;
+    padding: 3% 2%;
+    font-size: 15px;
+  }
+
+
 </style>

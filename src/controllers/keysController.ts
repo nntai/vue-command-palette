@@ -137,12 +137,15 @@ export default function keysController(
 
           action();
 
+          onModalChange(false);
+
           isIn = true;
         }
       }
 
       if (isDownKey()) {
         nextCustomerCommand();
+
         isIn = true;
       }
 
