@@ -2,7 +2,7 @@
   <div v-show="isModal" class="command-palette-place">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
-        <cmp-input class="cmp-input" :isModal="isModalOpened" :customerText="customerInput" @update-text="updateText" />
+        <cmp-input class="cmp-input" :isModal="isModal" :customerText="customerInput" @update-text="updateText" />
         <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand"  :closeModal="closeModal" :searchPhrase="customerInput"/>
         <cmp-footer class="cmp-footer" />
       </form>
@@ -56,13 +56,8 @@ const customerCommandName = computed(() => {
 
 
 
-
 const updateText = (value: string) => {customerInput.value = value;};
 const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommands, previousCustomerCommand, nextCustomerCommand, onEnterKey);
-
-const isModalOpened = computed(() => {
-  return {isModalValue: isModal};
-});
 
 </script>
 

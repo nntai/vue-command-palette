@@ -22,7 +22,7 @@
       default: ""
     },
     isModal: {
-      type: Object,
+      type: Boolean,
       default: function() {
         return {};
       }
@@ -43,7 +43,7 @@
 
 
 
-  watch(props.isModal.isModalValue, (value) => {
+  watch(props.isModal, (value) => {
     if (value) {
       setTimeout(() => {cmpInput.value.focus();}, 0);
     }
