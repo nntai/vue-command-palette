@@ -3,6 +3,8 @@ import { ref, Ref } from "vue";
 export default function customerInputController() {
   const customerInput: Ref<string> = ref("");
 
+  const isInputBlurred: Ref<boolean> = ref(true);
+
   function clearText() {
     customerInput.value = "";
   }
@@ -10,5 +12,6 @@ export default function customerInputController() {
   return {
     customerInput,
     clearText,
+    isInputBlurred,
   };
 }

@@ -1,17 +1,18 @@
 <template>
   <div>
-  <div></div>
-    <!-- <div v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.getCommandName())}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.getCommandAction()(); props.closeModal();}">
-      <div class="cmp-list cmp-list-left">{{customerCommand.getCommandName()}}</div>
-      <div class="cmp-list cmp-list-right">{{customerCommand.getCommandKey()}}</div>
-    </div> -->
-    <div v-if="props.customerCommands.length===0 && props.searchPhrase.length !==0">
+    <div v-if="customerCommands.length===0 && searchPhrase.length !==0">
       <NoResult/>
     </div>
     <div v-else>
-      <div v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName())}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
+      <div
+        v-for="(customerCommand, index) in customerCommands"
+        :key="index"
+        :class="{'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName())}"
+        @mouseover="() => {onCommandHovered(index);}"
+        @click="() => {customerCommand.command.getCommandAction()(); closeModal();}"
+      >
         <cmp-command-name class="cmp-list-modal cmp-list-left" :customerCommandName="customerCommand.command.getCommandName()" :highlightedIndexes="customerCommand.highlightedIndexes"/>
-        <div class="cmp-list-modal cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
+        <div class="cmp-list cmp-list-modal cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
         <slot :commandName="customerCommand.getCommandName()" name="cmdName">
           <div class="cmp-list cmp-list-left">
             {{customerCommand.getCommandName()}}
@@ -27,14 +28,16 @@
   </div>
 </template>
 <script setup lang="ts">
+  import { PropType } from 'vue';
   import Command from "../models/command";
+  import CommandName from "./CommandName.vue";
   import resultDisplayController from "../controllers/resultDisplayController";
   import NoResult from "./NoResult.vue";
   import CmpCommandName from "./CmpCommandName.vue";
 
   const props = defineProps({
     customerCommands: {
-      type: Array,
+      type: Array as PropType<Command[]>,
       default: function(placeProps) {
         return [];
       }
@@ -65,7 +68,6 @@
     return commandName === props.customerCommandName;
   };
 
-  const isTest = resultDisplayController(props.customerCommands, props.searchPhrase);
 </script>
 <style scoped>
 
@@ -98,4 +100,20 @@
     background-color: #111111;
     color: #ffffff;
   }
+
+
+
+
+
+
+
+
+
+  .cmp-list-item {
+    width: 100%;
+    padding: 3% 2%;
+    font-size: 15px;
+  }
+
+
 </style>

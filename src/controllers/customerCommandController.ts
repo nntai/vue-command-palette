@@ -1,6 +1,6 @@
 import { ref, watch, Ref } from "vue";
-
 import Command from "../models/command";
+import { getHighlightIndexes } from "../places/highlightText";
 
 import { getHighlightedIndexes } from "../places/highlightedText";
 
@@ -62,9 +62,9 @@ export default function customerCommandController(
   watch(textInput, (value) => {
     getCustomerCommands(value, commandsInput);
 
-      if (customerCommands.value.length != 0) {
-        updateCustomerCommand(0);
-      }
+    if (customerCommands.value.length != 0) {
+      updateCustomerCommand(0);
+    }
   });
 
   return {

@@ -2,7 +2,7 @@
   <div v-show="isModal" class="command-palette-place">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
-        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" />
+        <cmp-input class="cmp-input" :isModal="isModal" :customerText="customerInput" @update-text="updateText" />
         <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand"  :closeModal="closeModal" :searchPhrase="customerInput">
           <template v-slot:cmdName="{commandName}">
             <div>
@@ -15,6 +15,7 @@
           </div>
           </template>
         </cmp-list>
+        <cmp-footer class="cmp-footer" />
       </form>
     </div>
   </div>
@@ -22,7 +23,7 @@
 <script setup lang="ts">
 import CmpInput from "./components/CmpInput.vue";
 import CmpList from "./components/CmpList.vue";
-
+import CmpFooter from "./components/CmpFooter.vue";
 import keysController from "./controllers/keysController";
 
 import customerInputController from "./controllers/customerInputController";
@@ -66,7 +67,6 @@ const customerCommandName = computed(() => {
 
 
 
-
 const updateText = (value: string) => {customerInput.value = value;};
 const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommands, previousCustomerCommand, nextCustomerCommand, onEnterKey);
 
@@ -89,8 +89,14 @@ const keysInputController = keysController(onModalChange, props.modalKey, props.
   bottom: 0;
 }
 .cmp-input,
-.cmp-list {
+.cmp-list,
+.cmp-footer {
   flex: 1;
+  padding: 4% 3%;
+}
+.cmp-input {
+  max-height: 80px;
+  border-bottom: #747474 3px solid;
 }
 .cmp-input {
   max-height: 50px;
@@ -110,5 +116,7 @@ const keysInputController = keysController(onModalChange, props.modalKey, props.
 }
 .cmp-list {
   margin-top: 10px;
+  width: 100%;
+  border-bottom: #747474 3px solid;
 }
 </style>

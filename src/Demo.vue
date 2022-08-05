@@ -7,7 +7,7 @@ import CommandPalette from "./CommandPalette.vue";
 import Command from "./models/command";
 import { computed } from "vue";
 
-  
+
   const customerCommands = computed(() => {
     return [new Command("place", "M", () => {alert("");}),new Command("test", "A", () => {alert("");}) ,new Command("place test", "Ctrl + M", () => {alert("place test");})];
   });
@@ -27,6 +27,9 @@ body {
   height: 100vh;
   display: flex;
   padding: 8px;
+
+
+  background-color: #839742
 }
 .command-palette {
   background-color: purple;
