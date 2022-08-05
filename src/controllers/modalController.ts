@@ -1,7 +1,7 @@
 import { ref, Ref, watch } from "vue";
 
 export default function modalController(onModalClosed: Function) {
-  const isModal: Ref<boolean> = ref(false);
+  const isModal: Ref<boolean> = ref(true);
 
   function onModalChange(value: boolean) {
     isModal.value = value;

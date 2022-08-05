@@ -13,14 +13,14 @@
       >
         <cmp-command-name class="cmp-list-modal cmp-list-left" :customerCommandName="customerCommand.command.getCommandName()" :highlightedIndexes="customerCommand.highlightedIndexes"/>
         <div class="cmp-list cmp-list-modal cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
-        <slot :commandName="customerCommand.getCommandName()" name="cmdName">
+        <slot :commandName="customerCommand.command.getCommandName()" name="cmdName">
           <div class="cmp-list cmp-list-left">
-            {{customerCommand.getCommandName()}}
+            {{customerCommand.command.getCommandName()}}
           </div>
         </slot>
-        <slot :commandKey="customerCommand.getCommandKey()" name="cmdKey">
+        <slot :commandKey="customerCommand.command.getCommandKey()" name="cmdKey">
           <div class="cmp-list cmp-list-right">
-          {{customerCommand.getCommandKey()}}
+          {{customerCommand.command.getCommandKey()}}
           </div>
         </slot>
       </div>

@@ -3,7 +3,7 @@
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
         <cmp-input class="cmp-input" :isModal="isModal" :customerText="customerInput" @update-text="updateText" />
-        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand"  :closeModal="closeModal" :searchPhrase="customerInput">
+        <cmp-list class="cmp-list" :customerCommands="localCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand"  :closeModal="closeModal" :searchPhrase="customerInput">
           <template v-slot:cmdName="{commandName}">
             <div>
               {{ commandName }}
@@ -53,7 +53,7 @@ const props = defineProps({
 });
 
 const { customerInput, clearText } = customerInputController();
-const { customerCommands, customerCommand, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands);
+const { localCommands, customerCommand, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands);
 const { isModal, onModalChange, closeModal } = modalController(() => { commandRefresh(); clearText(); });
 const onEnterKey = () => {
   let action: Function = () => {};

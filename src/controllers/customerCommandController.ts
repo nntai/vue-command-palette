@@ -1,4 +1,4 @@
-import { ref, watch, Ref } from "vue";
+import { ref, watch, Ref, onMounted } from "vue";
 import Command from "../models/command";
 import { getHighlightIndexes } from "../places/highlightText";
 
@@ -8,7 +8,7 @@ export default function customerCommandController(
   textInput: Ref<string>,
   commandsInput: Command[]
 ) {
-  const customerCommands: Ref<{command: Command, highlightedIndexes:number[][]}[]> = ref([]);
+  const localCommands: Ref<{command: Command, highlightedIndexes:number[][]}[]> = ref([]);
 
   const customerCommand: Ref<Command> = ref(new Command("", "", () => {}));
 
@@ -32,11 +32,11 @@ export default function customerCommandController(
       }
     }
 
-    customerCommands.value = commands;
+    localCommands.value = commands;
   }
 
   function updateCustomerCommand(index: number) {
-    customerCommand.value = customerCommands.value[index].command;
+    customerCommand.value = localCommands.value[index].command;
 
     customerCommandIndex.value = index;
   }
@@ -48,13 +48,13 @@ export default function customerCommandController(
   }
 
   function nextCustomerCommand() {
-    if (customerCommandIndex.value + 1 < customerCommands.value.length) {
+    if (customerCommandIndex.value + 1 < localCommands.value.length) {
       updateCustomerCommand(customerCommandIndex.value + 1);
     }
   }
 
   function commandRefresh() {
-    customerCommands.value = [];
+    localCommands.value = [];
     customerCommand.value = new Command("", "", () => {});
     customerCommandIndex.value = 0;
   }
@@ -62,13 +62,17 @@ export default function customerCommandController(
   watch(textInput, (value) => {
     getCustomerCommands(value, commandsInput);
 
-    if (customerCommands.value.length != 0) {
+    if (localCommands.value.length != 0) {
       updateCustomerCommand(0);
     }
   });
 
+  onMounted(() => {
+    getCustomerCommands(textInput, commandsInput)
+  });
+
   return {
-    customerCommands,
+    localCommands,
     getCustomerCommands,
     customerCommand,
     previousCustomerCommand,

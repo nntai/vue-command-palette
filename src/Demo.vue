@@ -9,7 +9,11 @@ import { computed } from "vue";
 
 
   const customerCommands = computed(() => {
-    return [new Command("place", "M", () => {alert("");}),new Command("test", "A", () => {alert("");}) ,new Command("place test", "Ctrl + M", () => {alert("place test");})];
+    return [
+      new Command("place", "M", () => {alert("");}),
+      new Command("test", "A", () => {alert("");}) ,
+      new Command("place test", "Ctrl + M", () => {alert("place test");})
+    ];
   });
 </script>
 
