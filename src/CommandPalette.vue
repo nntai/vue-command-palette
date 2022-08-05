@@ -4,15 +4,11 @@
       <form @submit.prevent="onEnterKey">
         <cmp-input class="cmp-input" :isModal="isModal" :customerText="customerInput" @update-text="updateText" />
         <cmp-list class="cmp-list" :customerCommands="localCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand"  :closeModal="closeModal" :searchPhrase="customerInput">
-          <template v-slot:cmdName="{commandName}">
-            <div>
-              {{ commandName }}
-            </div>
+          <template v-slot:cmd-name="{commandName}">
+            <slot name="cmd-name" :commandName="commandName" />
           </template>
-          <template v-slot:cmdKey="{commandKey}">
-          <div>
-            {{ commandKey }}
-          </div>
+          <template v-slot:cmd-key="{commandKey}">
+            <slot name="cmd-key" :commandKey="commandKey" />
           </template>
         </cmp-list>
         <cmp-footer class="cmp-footer" />

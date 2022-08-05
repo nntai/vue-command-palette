@@ -11,17 +11,11 @@
         @mouseover="() => {onCommandHovered(index);}"
         @click="() => {customerCommand.command.getCommandAction()(); closeModal();}"
       >
-        <cmp-command-name class="cmp-list-modal cmp-list-left" :customerCommandName="customerCommand.command.getCommandName()" :highlightedIndexes="customerCommand.highlightedIndexes"/>
-        <div class="cmp-list cmp-list-modal cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
-        <slot :commandName="customerCommand.command.getCommandName()" name="cmdName">
-          <div class="cmp-list cmp-list-left">
-            {{customerCommand.command.getCommandName()}}
-          </div>
+        <slot :commandName="customerCommand.command.getCommandName()" name="cmd-name">
+          <cmp-command-name class="cmp-list-modal cmp-list-left" :customerCommandName="customerCommand.command.getCommandName()" :highlightedIndexes="customerCommand.highlightedIndexes"/>
         </slot>
-        <slot :commandKey="customerCommand.command.getCommandKey()" name="cmdKey">
-          <div class="cmp-list cmp-list-right">
-          {{customerCommand.command.getCommandKey()}}
-          </div>
+        <slot :commandKey="customerCommand.command.getCommandKey()" name="cmd-key">
+          <div class="cmp-list cmp-list-modal cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
         </slot>
       </div>
     </div>
