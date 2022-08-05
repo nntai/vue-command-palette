@@ -9,7 +9,7 @@ import { computed } from "vue";
 
   
   const customerCommands = computed(() => {
-    return [new Command("place", "m", () => {alert("");}), new Command("place place", "b", () => {alert("");}), new Command("place place place", "m+b", () => {alert("");})];
+    return [new Command("place", "M", () => {alert("");}),new Command("test", "A", () => {alert("");}) ,new Command("place test", "Ctrl + M", () => {alert("place test");})];
   });
 </script>
 
@@ -29,7 +29,7 @@ body {
   padding: 8px;
 }
 .command-palette {
-  background-color: #111111;
-  padding: 17px 17px 17px 17px;
+  background-color: purple;
+  padding: 2% 25%;
 }
 </style>
