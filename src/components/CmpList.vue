@@ -1,9 +1,23 @@
 <template>
   <div>
     Cmp List
-    <div v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
-      <command-name :commandName="customerCommand.command.getCommandName()" :highlightArr="customerCommand.highlightArr" class="cmp-list cmp-list-left" />
-      <div class="cmp-list cmp-list-right">{{customerCommand.command.getCommandKey()}}</div>
+    <div v-if="props.customerCommands.length===0">
+      <no-result />
+    </div>
+    <div v-else v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
+      <slot :commandName="customerCommand.command.getCommandName()" name="cmd-name">
+        <command-name 
+          :commandName="customerCommand.command.getCommandName()" 
+          :highlightArr="customerCommand.highlightArr" 
+          class="cmp-list-command cmp-list-left" 
+        />
+      </slot>
+      <slot :commandKey="customerCommand.command.getCommandKey()" name="cmd-key">
+        <div 
+          class="cmp-list-command cmp-list-right">
+          {{customerCommand.command.getCommandKey()}}
+        </div>
+      </slot>
     </div>
   </div>
 </template>
@@ -11,6 +25,8 @@
   import Command from "../models/command";
 
   import CommandName from "./CommandName.vue";
+
+  import NoResult from "./NoResult.vue";
   
   const props = defineProps({
     customerCommands: {
@@ -44,7 +60,7 @@
 <style scoped>
   
 
-  .cmp-list {
+  .cmp-list-command {
     display: inline-block;
     width: 50%;
   }
