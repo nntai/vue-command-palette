@@ -37,10 +37,16 @@ export default function keysController(
     preventDefault: Function;
     key: string;
   }) {
-    if (e.target.tagName != "INPUT") {
+    if (e.target.tagName !== "INPUT") {
       e.preventDefault();
 
       addKey(e.key);
+    } else {
+      if (e.key === upKey || e.key === downKey) {
+        e.preventDefault();
+
+        addKey(e.key);
+      }
     }
   }
 
@@ -49,10 +55,16 @@ export default function keysController(
     preventDefault: Function;
     key: string;
   }) {
-    if (e.target.tagName != "INPUT") {
+    if (e.target.tagName !== "INPUT") {
       e.preventDefault();
 
       deleteKey(e.key);
+    } else {
+      if (e.key === upKey || e.key === downKey) {
+        e.preventDefault();
+
+        deleteKey(e.key);
+      }
     }
   }
 

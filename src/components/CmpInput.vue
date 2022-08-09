@@ -1,7 +1,7 @@
 <template>
   <div class="cmp-input-place">
     Input Component
-    <input type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}" class="input-place" ref="cmpInput" @keydown.down="blurInput" />
+    <input type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}" class="input-place" ref="cmpInput"  />
   </div>
 </template>
 <script setup lang="ts">
@@ -18,7 +18,7 @@
       default: function() {
         return {};
       }
-    }
+    },
   });
 
   const emits = defineEmits(["updateText"]);
@@ -27,11 +27,6 @@
   
   
   const cmpInput = ref();
-  const blurInput = ref(() => {});
-  
-  onMounted(() => {
-    blurInput.value = () => {cmpInput.value.blur();};
-  });
 
 
 

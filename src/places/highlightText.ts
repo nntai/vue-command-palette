@@ -1,11 +1,11 @@
 export const getHighlightIndexes = (text: string, highlightText: string) => {
   const regex = new RegExp(highlightText, "g");
-  const highlightIndexes: number[][] = [];
+  let highlightIndexes: number[][] = [];
   let arr: { index: number } = {
     index: 0,
   };
 
-  while (null !== (arr = regex.exec(highlightText)!)) {
+  while (null !== (arr = regex.exec(text)!)) {
     highlightIndexes.push([arr.index, regex.lastIndex]);
   }
 

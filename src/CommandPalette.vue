@@ -2,7 +2,7 @@
   <div v-show="isModal" class="command-palette-place">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
-        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened" />
+        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"  />
         <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal" >
           <template v-slot:cmd-name="{commandName}">
             <slot name="cmd-name" :commandName="commandName" />
