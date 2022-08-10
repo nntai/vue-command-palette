@@ -1,6 +1,5 @@
 <template>
   <div class="cmp-input-place">
-    Input Component
     <input type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}" class="input-place" ref="cmpInput"  />
   </div>
 </template>
@@ -40,15 +39,13 @@
 </script>
 <style scoped>
 
-
-  
-
-
-
-  .input-place {
-    width: 70%;
-    border: none;
-    padding: 1% 1%;
-    font-size: 15px;
-  }
+  .input-place{
+  display: flex;
+  width: 100%;
+  padding: 10px;
+}
+.input-place:focus{
+  outline: none;
+  box-shadow: none;
+}
 </style>

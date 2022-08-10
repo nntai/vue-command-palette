@@ -78,10 +78,9 @@ const isModalOpened = computed(() => {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-
   width: 50%;
-  border-radius: 15px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 8px;
+  border-radius: 4px;
 }
 .command-palette-place {
   position: fixed;
@@ -91,18 +90,31 @@ const isModalOpened = computed(() => {
   bottom: 0;
 }
 .cmp-input,
+.cmp-list {
+  flex: 1;
+}
+.cmp-input,
 .cmp-list,
 .cmp-footer {
   flex: 1;
   padding: 4% 3%;
+}.cmp-input {
+  max-height: 50px;
+  background: #FFFFFF;
+  mix-blend-mode: normal;
+  /* Gray/200 (Border-B2, Gray-G2, Light-L2)) */
+
+  border: 1px solid #EDEDED;
+
+ box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
+  
 }
-.cmp-input {
-  max-height: 80px;
-  border-bottom: #747474 3px solid;
+.cmp-input:hover{
+  outline: none;
+
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
 }
 .cmp-list {
   margin-top: 10px;
-  width: 100%;
-  border-bottom: #747474 3px solid;
 }
 </style>
