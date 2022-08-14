@@ -1,3 +1,4 @@
+
 export const getHighlightIndexes = (text: string, highlightText: string) => {
   const regex = new RegExp(highlightText, "g");
   let highlightIndexes: number[][] = [];

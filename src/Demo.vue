@@ -35,6 +35,6 @@ body {
   
   padding: 15% 0% 0% 30%;
 
-  background: rgba(0, 0, 0,  0.2)
+  background: rgba(0, 0, 0,  0.5)
 }
 </style>

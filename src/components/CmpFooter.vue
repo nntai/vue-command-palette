@@ -16,17 +16,15 @@
 
 <style scoped>
 .footer {
-height: 16px;
-
-/* XS (Old: XS)/400 (regular) */
-
 font-family: 'Open Sans';
 font-style: normal;
-font-weight: 600;
-font-size: 11px;
-line-height: 15px;
-/* identical to box height, or 140% */
+font-weight: 400;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height, or 133% */
 
+
+/* Blue-gray/500 (Dark-D5) */
 
 color: #BEC1CB;
 
@@ -34,7 +32,7 @@ color: #BEC1CB;
 /* Inside auto layout */
 
 flex: none;
-order: 0;
+order: 1;
 flex-grow: 0;
 }
 </style>

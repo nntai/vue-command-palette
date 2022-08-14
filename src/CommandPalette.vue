@@ -74,6 +74,9 @@ const isModalOpened = computed(() => {
 </script>
 
 <style scoped>
+:root{
+  --white: #ffffff;
+}
 .command-palette-wrapper {
   display: flex;
   flex-direction: column;
@@ -88,6 +91,7 @@ const isModalOpened = computed(() => {
   left: 0;
   right: 0;
   bottom: 0;
+  padding-top: 3%;
 }
 .cmp-input,
 .cmp-list {
@@ -102,16 +106,12 @@ const isModalOpened = computed(() => {
   max-height: 50px;
   background: #FFFFFF;
   mix-blend-mode: normal;
-  /* Gray/200 (Border-B2, Gray-G2, Light-L2)) */
-
   border: 1px solid #EDEDED;
-
  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
   
 }
 .cmp-input:hover{
   outline: none;
-
   box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
 }
 .cmp-list {

@@ -97,7 +97,8 @@ import CommandPalette from "../CommandPalette.vue";
 
 
   .cmp-list-is-active {
-    background-color: #111111;
+    border-radius: 4px;
+    background-color: green;
     color: #ffffff;
   }
   .cmp-list-item {
@@ -106,3 +107,5 @@ import CommandPalette from "../CommandPalette.vue";
     font-size: 15px;
   }
 </style>
+
+

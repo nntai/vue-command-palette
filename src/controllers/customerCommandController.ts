@@ -7,7 +7,7 @@ export default function customerCommandController(
   commandsInput: Command[]
 ) {
   const customerCommands: Ref<
-    { command: Command; highlightArr: number[][] }[]
+    { command: Command; highlightArr: boolean [] }[]
   > = ref([]);
 
   const customerCommand: Ref<Command> = ref(new Command("", "", () => {}));
@@ -18,7 +18,7 @@ export default function customerCommandController(
     textInputValue: string,
     commandsInput: Command[]
   ) {
-    let commands: { command: Command; highlightArr: number[][] }[] = [];
+    let commands: { command: Command; highlightArr: boolean [] }[] = [];
 
     const regex = new RegExp(textInputValue);
 
