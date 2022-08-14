@@ -48,9 +48,9 @@ const props = defineProps({
   }
 });
 
-const { customerInput, clearText } = customerInputController();
-const { customerCommands, customerCommand, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands);
-const { isModal, onModalChange, closeModal } = modalController(() => { commandRefresh(); clearText(); });
+const { customerInput, clearText, isTextCleared } = customerInputController();
+const { customerCommands, customerCommand, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands, isTextCleared);
+const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandRefresh(); });
 const onEnterKey = () => {
   let action: Function = () => {};
   action = customerCommand.value.getCommandAction();

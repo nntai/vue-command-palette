@@ -1,14 +1,14 @@
 import { ref, watch, Ref } from "vue";
 import Command from "../models/command";
-import { getHighlightIndexes } from "../places/highlightText";
+import { getHighlights } from "../places/highlightText";
 
 export default function customerCommandController(
   textInput: Ref<string>,
-  commandsInput: Command[]
+  commandsInput: Command[],
+  isTextCleared: Ref<boolean>
 ) {
-  const customerCommands: Ref<
-    { command: Command; highlightArr: boolean [] }[]
-  > = ref([]);
+  const customerCommands: Ref<{ command: Command; highlightArr: boolean[] }[]> =
+    ref([]);
 
   const customerCommand: Ref<Command> = ref(new Command("", "", () => {}));
 
@@ -18,7 +18,7 @@ export default function customerCommandController(
     textInputValue: string,
     commandsInput: Command[]
   ) {
-    let commands: { command: Command; highlightArr: boolean [] }[] = [];
+    let commands: { command: Command; highlightArr: boolean[] }[] = [];
 
     const regex = new RegExp(textInputValue);
 
@@ -28,10 +28,7 @@ export default function customerCommandController(
           command: commandsInput[i],
           highlightArr:
             textInputValue != ""
-              ? getHighlightIndexes(
-                  commandsInput[i].getCommandName(),
-                  textInputValue
-                )
+              ? getHighlights(commandsInput[i].getCommandName(), textInputValue)
               : [],
         });
       }
@@ -65,10 +62,14 @@ export default function customerCommandController(
   }
 
   watch(textInput, (value) => {
-    getCustomerCommands(value, commandsInput);
+    if (isTextCleared.value) {
+      isTextCleared.value = false;
+    } else {
+      getCustomerCommands(value, commandsInput);
 
-    if (customerCommands.value.length != 0) {
-      updateCustomerCommand(0);
+      if (customerCommands.value.length != 0) {
+        updateCustomerCommand(0);
+      }
     }
   });
 

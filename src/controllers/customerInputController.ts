@@ -5,7 +5,11 @@ export default function customerInputController() {
 
   const isInputBlurred: Ref<boolean> = ref(true);
 
+  const isTextCleared: Ref<boolean> = ref(false);
+
   function clearText() {
+    isTextCleared.value = true;
+
     customerInput.value = "";
   }
 
@@ -13,5 +17,6 @@ export default function customerInputController() {
     customerInput,
     clearText,
     isInputBlurred,
+    isTextCleared,
   };
 }
