@@ -1,7 +1,7 @@
 <template>
   <div>
     place
-    <span v-for="(characterInName, index) in commandNameArr" :key="index" :class="{'is-highlighted': isHighlighted(index, props.highlightArr)}" >
+    <span v-for="(characterInName, index) in commandNameArr" :key="index" :class="{'is-highlighted': props.highlightArr[index]}" >
       {{characterInName}}
     </span>
   </div>
@@ -10,8 +10,6 @@
 <script setup lang="ts">
   
   import { computed } from "vue";
-
-  import { isHighlighted } from "../places/highlightText";
   
   
   
