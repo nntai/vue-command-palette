@@ -1,7 +1,7 @@
 <template>
   <div class="cmp-input-place">
     <div class="search-icon"><font-awesome-icon :icon="['fas', 'magnifying-glass']" /></div>
-    <input type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}" class="input-place" ref="cmpInput"  />
+    <input type="text" :value="customerText" @input="(event) => {onInputChanged(event.target.value);}" class="input-place" ref="cmpInput" placeholder="Select a command ..."  />
   </div>
 </template>
 <script setup lang="ts">
@@ -54,7 +54,8 @@
     display: inline;
     width: 10%;
     padding: 10px;
-    color: black;
+    color:#7AE1AA;
+    font-size: 20px;
   }
   .input-place{
   width: 85%;
@@ -64,7 +65,7 @@
 }
 input{
   font-family: 'Open Sans';
-  font-size: 32px;
+  font-size: 20px;
 }
 .input-place:focus{
   outline: none;

@@ -3,10 +3,11 @@ import {
   faArrowUp,
   faArrowDown,
   faPerson,
-  faMagnifyingGlass
+  faMagnifyingGlass,
+  faArrowTurnDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faArrowUp, faArrowDown, faPerson, faMagnifyingGlass);
+library.add(faArrowUp, faArrowDown, faPerson, faMagnifyingGlass, faArrowTurnDown);
 
 export default FontAwesomeIcon;

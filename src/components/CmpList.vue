@@ -83,7 +83,7 @@ import CommandPalette from "../CommandPalette.vue";
     text-align: right;
   }
   .key {
-    display: inline;
+    /* display: inline;
     border: 2px solid black; 
     box-shadow: 2px 2px black; 
     font-size: .85em; 
@@ -92,19 +92,28 @@ import CommandPalette from "../CommandPalette.vue";
     font-weight: 600;
     letter-spacing: .05em; 
     padding: 3px 5px;
-    white-space: nowrap;
+    white-space: nowrap; */
+  width: 63px;
+  height: 16px;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 16px;
+  color: #BEC1CB;
+  display:inline;
   }
-
 
   .cmp-list-is-active {
     border-radius: 4px;
-    background-color: green;
-    color: #ffffff;
+    border: #7AE1AA 1px solid;
+    background-color: #7AE1AA;
   }
   .cmp-list-item {
     width: 100%;
     padding: 3% 2%;
     font-size: 15px;
+    text-transform: capitalize;
   }
 </style>
 

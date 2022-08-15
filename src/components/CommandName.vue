@@ -37,6 +37,8 @@
 
 <style scoped>
   .is-highlighted {
-    font-weight: bold
+    font-weight: bold;
+    color: #000054;
+    text-decoration: underline;
   }
 </style>

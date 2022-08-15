@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div><font-awesome-icon :icon="['fas', 'arrow-up']" /><font-awesome-icon :icon="['fas', 'arrow-down']" /> to navigate, <font-awesome-icon :icon="['']" /> to execute and Control + K to open modal</div>
+    <div><font-awesome-icon :icon="['fas', 'arrow-up']" /><font-awesome-icon :icon="['fas', 'arrow-down']" /> to navigate, <font-awesome-icon class="enter" :icon="['fas','arrow-turn-down']" /> to execute and Control + K to open modal</div>
   </div>
 </template>
 
@@ -19,8 +19,8 @@
 font-family: 'Open Sans';
 font-style: normal;
 font-weight: 400;
-font-size: 12px;
-line-height: 16px;
+font-size: 13px;
+line-height: 20px;
 /* identical to box height, or 133% */
 
 
@@ -34,5 +34,8 @@ color: #BEC1CB;
 flex: none;
 order: 1;
 flex-grow: 0;
+}
+.enter{
+  transform: rotate(90deg);
 }
 </style>
