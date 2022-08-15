@@ -1,5 +1,5 @@
 <template>
-  <div v-show="true" class="command-palette-place">
+  <div v-show="isModal" class="command-palette-place">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
         <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"/>
@@ -109,10 +109,10 @@ const commandIndex = computed(() => {
 .cmp-input,
 .cmp-list,
 .cmp-footer {
-  flex: 1;
   padding: 4% 3%;
+  flex: 1;
 }.cmp-input {
-  max-height: 50px;
+  max-height: 100px;
   background: #FFFFFF;
   mix-blend-mode: normal;
   border: 1px solid #EDEDED;
@@ -124,6 +124,7 @@ const commandIndex = computed(() => {
   box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
 }
 .cmp-list {
+  padding: 0% 3%;
   margin-top: 10px;
 }
 </style>

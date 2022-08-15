@@ -11,8 +11,8 @@ import { computed } from "vue";
   const customerCommands = computed(() => {
     return [new Command("place", "m", () => {alert("1");}),
      new Command("place place", "b", () => {alert("2");}),
-     new Command("place place place test 1", "Shift+a", () => {alert("3");}),
-     new Command("place place place test 2", "m + b", () => {alert("4");}),
+     new Command("place place place test 1", "Control+Shift+J", () => {alert("3");}),
+     new Command("place place place test 2", "B", () => {alert("4");}),
      new Command("place place place test 3", "m + c", () => {alert("5");}),
      new Command("place place place test 4", "m + d", () => {alert("6");}),
      new Command("place place place test 5", "m + e", () => {alert("7");}),
@@ -25,8 +25,8 @@ import { computed } from "vue";
      new Command("place place place test 11", "n + m", () => {alert("14");}),
      new Command("place place place test 12", "m + v", () => {alert("15");}),
      new Command("place place place test 13", "b + c", () => {alert("13");}),
-     new Command("place place place test 14", "n + m", () => {alert("14");}),
-     new Command("place place place test 15", "b + c", () => {alert("13");}),
+     new Command("place place place test 14", "s", () => {alert("a");}),
+     new Command("place place place test 15", "a+c", () => {alert("ac");}),
      new Command("place place place test 16", "n + m", () => {alert("14");})]
   });
 </script>

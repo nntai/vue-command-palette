@@ -3,7 +3,7 @@
     <div v-if="props.customerCommands.length===0">
       <no-result />
     </div>
-    <div v-else v-for="(customerCommand, index) in props.customerCommands" :key="index" ref="root2" :class=" {'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
+    <div v-else v-for="(customerCommand, index) in props.customerCommands" :key="index" ref="root2" :class=" {'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true, }" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
       <slot :commandName="customerCommand.command.getCommandName()" name="cmd-name">
         <command-name 
           :commandName="customerCommand.command.getCommandName()" 
@@ -79,18 +79,25 @@
   const root2 = ref<HTMLElement | null>(null);
   watch(props.isArrowDown.isArrowDownValue, (value) => {
     if (value) {
-      let totalLength = root2.value[0].clientHeight;
+      let totalLength = 0;
       for (let i = 0; i < props.commandIndex.commandIndexValue.value+1;i++){
         totalLength += root2.value[i].clientHeight;
        }
       if(totalLength>root.value.clientHeight){
        root.value.scrollTop = totalLength-root.value.clientHeight;
       }
-          console.log(props.commandIndex.commandIndexValue.value)
     }
   });
   watch(props.isArrowUp.isArrowUpValue, (value) => {
     if (value) {
+      let totalLength = 0;
+      for (let i = 0; i < props.commandIndex.commandIndexValue.value;i++){
+        totalLength += root2.value[i].clientHeight;
+       }
+       console.log(root.value.scrollTop)
+       if(totalLength<root.value.scrollTop){
+         root.value.scrollTop = totalLength; 
+       }    
     }
   });
    watch(props.commandIndex.commandIndexValue, (value) => {
@@ -100,7 +107,7 @@
   
 .result{
   overflow-y: scroll;
-  max-height: 40vh;
+  max-height: 50vh;
   }
   .cmp-list-command {
     display: inline-block;
