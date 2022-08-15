@@ -66,9 +66,10 @@ export default function customerCommandController(
       isTextCleared.value = false;
     } else {
       getCustomerCommands(value, commandsInput);
-
       if (customerCommands.value.length != 0) {
         updateCustomerCommand(0);
+      } else {
+        commandRefresh();
       }
     }
   });
@@ -81,5 +82,6 @@ export default function customerCommandController(
     nextCustomerCommand,
     updateCustomerCommand,
     commandRefresh,
+    customerCommandIndex
   };
 }

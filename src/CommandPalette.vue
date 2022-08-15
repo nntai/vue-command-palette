@@ -1,9 +1,9 @@
 <template>
-  <div v-show="isModal" class="command-palette-place">
+  <div v-show="true" class="command-palette-place">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
-        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"  />
-        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal" >
+        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"/>
+        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal" :isArrowDown="isArrowDown" :isArrowUp="isArrowUp" :commandIndex="commandIndex" >
           <template v-slot:cmd-name="{commandName}">
             <slot name="cmd-name" :commandName="commandName" />
           </template>
@@ -49,7 +49,7 @@ const props = defineProps({
 });
 
 const { customerInput, clearText, isTextCleared } = customerInputController();
-const { customerCommands, customerCommand, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands, isTextCleared);
+const { customerCommands, customerCommand, customerCommandIndex, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands, isTextCleared);
 const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandRefresh(); });
 const onEnterKey = () => {
   let action: Function = () => {};
@@ -69,6 +69,15 @@ const keysInputController = keysController(onModalChange, props.modalKey, props.
 
 const isModalOpened = computed(() => {
   return {isModalValue: isModal};
+});
+const isArrowDown = computed(() => {
+  return {isArrowDownValue: keysInputController.isArrowDown};
+});
+const isArrowUp = computed(() => {
+  return {isArrowUpValue: keysInputController.isArrowUp};
+});
+const commandIndex = computed(() => {
+  return {commandIndexValue: customerCommandIndex};
 });
 
 </script>

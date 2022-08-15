@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div><font-awesome-icon :icon="['fas', 'arrow-up']" /><font-awesome-icon :icon="['fas', 'arrow-down']" /> to navigate, <font-awesome-icon class="enter" :icon="['fas','arrow-turn-down']" /> to execute and Control + K to open modal</div>
+    <div><font-awesome-icon :icon="['fas', 'arrow-up']" /><font-awesome-icon :icon="['fas', 'arrow-down']" /> &nbsp; to navigate &nbsp;&nbsp; | &nbsp;&nbsp;<font-awesome-icon class="enter" :icon="['fas','arrow-turn-down']" /> &nbsp; to execute &nbsp;&nbsp; | &nbsp;&nbsp;  Control + K to open modal</div>
   </div>
 </template>
 

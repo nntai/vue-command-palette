@@ -12,7 +12,8 @@ export default function keysController(
   onEnterKey: Function
 ) {
   const keys: Ref<string[]> = ref([]);
-
+  const isArrowUp: Ref<boolean> = ref(false);
+  const isArrowDown: Ref<boolean> = ref(false);
   const closeKey: string = "Escape";
   const downKey: string = "ArrowDown";
 
@@ -44,7 +45,6 @@ export default function keysController(
     } else {
       if (e.key === upKey || e.key === downKey) {
         e.preventDefault();
-
         addKey(e.key);
       }
     }
@@ -63,6 +63,12 @@ export default function keysController(
       if (e.key === upKey || e.key === downKey) {
         e.preventDefault();
 
+        if(e.key===upKey){
+          isArrowUp.value = false;
+        }
+        if(e.key===downKey){
+          isArrowDown.value=false;
+        }
         deleteKey(e.key);
       }
     }
@@ -90,7 +96,7 @@ export default function keysController(
 
   function isDownKey() {
     let isIn: boolean = false;
-
+    
     if (isCustomerKey(downKey)) {
       isIn = true;
     }
@@ -157,13 +163,13 @@ export default function keysController(
 
       if (isDownKey()) {
         nextCustomerCommand();
-
+        isArrowDown.value = true;
         isIn = true;
       }
 
       if (isUpKey()) {
         previousCustomerCommand();
-
+        isArrowUp.value = true;
         isIn = true;
       }
 
@@ -187,5 +193,7 @@ export default function keysController(
     onKeyUpInput,
     isCustomerKey,
     isCloseKey,
+    isArrowDown,
+    isArrowUp
   };
 }

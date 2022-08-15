@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="result" ref="root">
     <div v-if="props.customerCommands.length===0">
       <no-result />
     </div>
-    <div v-else v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
+    <div v-else v-for="(customerCommand, index) in props.customerCommands" :key="index" ref="root2" :class=" {'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.command.getCommandAction()(); props.closeModal();}">
       <slot :commandName="customerCommand.command.getCommandName()" name="cmd-name">
         <command-name 
           :commandName="customerCommand.command.getCommandName()" 
@@ -15,9 +15,6 @@
         <div 
           class="cmp-list-command cmp-list-right">
           <div class="key">{{customerCommand.command.getCommandKey()}}</div>
-          <!--
-            <div class="key">{{customerCommand.command.getCommandKey()}}</div>
-          -->
         </div>
       </slot>
     </div>
@@ -29,7 +26,8 @@
   import CommandName from "./CommandName.vue";
 
   import NoResult from "./NoResult.vue";
-import CommandPalette from "../CommandPalette.vue";
+  import CommandPalette from "../CommandPalette.vue";
+  import { onMounted,ref, watch} from "vue";
   
   const props = defineProps({
     customerCommands: {
@@ -53,23 +51,61 @@ import CommandPalette from "../CommandPalette.vue";
       default: function() {
         return "";
       }
-    }
+    },
+    isArrowUp: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    },
+    isArrowDown: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    },
+    commandIndex: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    },
   });
 
   const isCommandActive = (commandName: string) => {
     return commandName === props.customerCommandName;
   };
+  const root = ref<HTMLElement | null>(null);
+  const root2 = ref<HTMLElement | null>(null);
+  watch(props.isArrowDown.isArrowDownValue, (value) => {
+    if (value) {
+      let totalLength = root2.value[0].clientHeight;
+      for (let i = 0; i < props.commandIndex.commandIndexValue.value+1;i++){
+        totalLength += root2.value[i].clientHeight;
+       }
+      if(totalLength>root.value.clientHeight){
+       root.value.scrollTop = totalLength-root.value.clientHeight;
+      }
+          console.log(props.commandIndex.commandIndexValue.value)
+    }
+  });
+  watch(props.isArrowUp.isArrowUpValue, (value) => {
+    if (value) {
+    }
+  });
+   watch(props.commandIndex.commandIndexValue, (value) => {
+  });
 </script>
 <style scoped>
   
-.title-name{
-  text-align: left;
-  color: #858B9D;
-  font-family: 'Open Sans';
-}
+.result{
+  overflow-y: scroll;
+  max-height: 40vh;
+  }
   .cmp-list-command {
     display: inline-block;
     width: 50%;
+    height: 20px;
   }
 
 
@@ -102,6 +138,7 @@ import CommandPalette from "../CommandPalette.vue";
   line-height: 16px;
   color: #BEC1CB;
   display:inline;
+  text-transform: capitalize;
   }
 
   .cmp-list-is-active {
@@ -113,8 +150,15 @@ import CommandPalette from "../CommandPalette.vue";
     width: 100%;
     padding: 3% 2%;
     font-size: 15px;
-    text-transform: capitalize;
   }
+ ::-webkit-scrollbar {
+  width: .5em;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 5px;
+}
 </style>
 
 
