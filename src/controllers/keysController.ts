@@ -2,13 +2,13 @@ import { ref, Ref, computed, watch, onMounted } from "vue";
 
 import { isCorrectKey } from "../places/firstPlace";
 import Command from "../models/command";
-
+import GroupCommand from "../models/groupCommand";
 export default function keysController(
   onModalChange: Function,
   modalKey: string,
-  customerCommands: Command[],
-  previousCustomerCommand: Function,
-  nextCustomerCommand: Function,
+  customerGroupCommands: GroupCommand[],
+  previousCustomerGroupCommand: Function,
+  nextCustomerGroupCommand: Function,
   onEnterKey: Function
 ) {
   const keys: Ref<string[]> = ref([]);
@@ -147,28 +147,30 @@ export default function keysController(
         isIn = true;
       }
 
-      for (let i: number = 0; i < customerCommands.length; ++i) {
-        if (isCustomerKey(customerCommands[i].getCommandKey())) {
-          let action: Function = () => {};
-
-          action = customerCommands[i].getCommandAction();
-
-          action();
-
-          onModalChange(false);
-
-          isIn = true;
+      for (let i: number = 0; i < customerGroupCommands.length; ++i) {
+        for (let j:number = 0; j < customerGroupCommands[i].getCommands().length;j ++){
+          if (isCustomerKey(customerGroupCommands[i].getCommands()[j].command.getCommandKey())) {
+            let action: Function = () => {};
+  
+            action = customerGroupCommands[i].getCommands()[j].command.getCommandAction();
+  
+            action();
+  
+            onModalChange(false);
+  
+            isIn = true;
+          }
         }
       }
 
       if (isDownKey()) {
-        nextCustomerCommand();
+        nextCustomerGroupCommand();
         isArrowDown.value = true;
         isIn = true;
       }
 
       if (isUpKey()) {
-        previousCustomerCommand();
+        previousCustomerGroupCommand();
         isArrowUp.value = true;
         isIn = true;
       }

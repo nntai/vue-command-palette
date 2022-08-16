@@ -3,14 +3,14 @@
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
         <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"/>
-        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand" :closeModal="closeModal" :isArrowDown="isArrowDown" :isArrowUp="isArrowUp" :commandIndex="commandIndex" >
+        <cmp-list-group class="cmp-list" :customerGroupCommands="customerGroupCommands" :customerGroupCommandName="customerGroupCommandName" :onGroupCommandHovered="updateCustomerGroupCommand" :closeModal="closeModal" :isArrowDown="isArrowDown" :isArrowUp="isArrowUp" :groupCommandIndex="groupCommandIndex" :isDisplayByGroup="isDisplayByGroup" >
           <template v-slot:cmd-name="{commandName}">
             <slot name="cmd-name" :commandName="commandName" />
           </template>
           <template v-slot:cmd-key="{commandKey}">
             <slot name="cmd-key" :commandKey="commandKey" />
           </template>
-        </cmp-list>
+        </cmp-list-group>
         <cmp-footer class="cmp-footer" />
       </form>
     </div>
@@ -34,7 +34,10 @@ import { vClickOutside } from "./directives/vClickOutside";
 
 import Command from "./models/command";
 
+import GroupCommand from "./models/groupCommand";
 
+import customerCommandGroupController from "./controllers/customerCommandGroupController";
+import CmpListGroup from "./components/CmpListGroup.vue";
 const props = defineProps({
   modalKey: {
     type: String,
@@ -45,27 +48,40 @@ const props = defineProps({
     default: function(placeProps) {
       return [];
     }
+  },
+  customerCommandsByGroup: {
+    type: Array,
+    default: function(placeProps) {
+      return [];
+    }
+  },
+  isDisplayByGroup:{
+    type: Boolean,
+    default: false
   }
 });
-
 const { customerInput, clearText, isTextCleared } = customerInputController();
-const { customerCommands, customerCommand, customerCommandIndex, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands, isTextCleared);
-const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandRefresh(); });
+const { customerGroupCommands, customerGroupCommand, customerCommandGroupIndex, updateCustomerGroupCommand, previousCustomerGroupCommand, nextCustomerGroupCommand, commandGroupRefresh } = customerCommandGroupController(customerInput, props.customerCommandsByGroup, isTextCleared);
+const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandGroupRefresh(); });
 const onEnterKey = () => {
   let action: Function = () => {};
-  action = customerCommand.value.getCommandAction();
+  action = customerGroupCommand.value.getCommandAction();
   action();
   closeModal();
 };
 const customerCommandName = computed(() => {
   return customerCommand.value.getCommandName();
 });
+const customerGroupCommandName = computed(() => {
+  return customerGroupCommand.value.getCommandName();
+});
+
 
 
 
 
 const updateText = (value: string) => {customerInput.value = value;};
-const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommands, previousCustomerCommand, nextCustomerCommand, onEnterKey);
+const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommandsByGroup, previousCustomerGroupCommand, nextCustomerGroupCommand, onEnterKey);
 
 const isModalOpened = computed(() => {
   return {isModalValue: isModal};
@@ -78,6 +94,9 @@ const isArrowUp = computed(() => {
 });
 const commandIndex = computed(() => {
   return {commandIndexValue: customerCommandIndex};
+});
+const groupCommandIndex = computed(() => {
+  return {groupCommandIndexValue: customerCommandGroupIndex};
 });
 
 </script>

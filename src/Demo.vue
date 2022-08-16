@@ -1,18 +1,21 @@
 <template>
-  <command-palette class="command-palette" :customerCommands="customerCommands" />
+  <command-palette class="command-palette" :customerCommands="customerCommands" :customerCommandsByGroup="customerGroupCommands" :isDisplayByGroup="isDisplayByGroup"/>
+  
 </template>
 
 <script setup lang="ts">
 import CommandPalette from "./CommandPalette.vue";
 import Command from "./models/command";
 import { computed } from "vue";
-
-  
+import GroupCommand from "./models/groupCommand";
+   const isDisplayByGroup = computed(() => {
+    return false;
+   });
   const customerCommands = computed(() => {
     return [new Command("place", "m", () => {alert("1");}),
      new Command("place place", "b", () => {alert("2");}),
      new Command("place place place test 1", "Control+Shift+J", () => {alert("3");}),
-     new Command("place place place test 2", "B", () => {alert("4");}),
+     new Command("place place place test 2place place place test 2place place place test 2place place place test 2", "B", () => {alert("4");}),
      new Command("place place place test 3", "m + c", () => {alert("5");}),
      new Command("place place place test 4", "m + d", () => {alert("6");}),
      new Command("place place place test 5", "m + e", () => {alert("7");}),
@@ -29,6 +32,36 @@ import { computed } from "vue";
      new Command("place place place test 15", "a+c", () => {alert("ac");}),
      new Command("place place place test 16", "n + m", () => {alert("14");})]
   });
+  const customerGroupCommands = computed(() => {
+    return [
+      new GroupCommand("hao fuckboiz",[
+      new Command("place place", "b", () => {alert("2");}),
+     new Command("place place place test 1", "Control+Shift+J", () => {alert("3");}),
+     new Command("place place place test 2place place place test 2place place place test 2place place place test 2", "B", () => {alert("4");}),
+     new Command("place place place test 3", "m + c", () => {alert("5");}),
+     new Command("place place place test 4", "m + d", () => {alert("6");}),
+     new Command("place place place test 5", "m + e", () => {alert("7");}),
+     new Command("place place place test 6", "m + f", () => {alert("8");}),
+     new Command("avbc", "m + t", () => {alert("9");}),
+      ]),
+      new GroupCommand("dat goodboiz",[
+      new Command("place place place test 7", "m + g", () => {alert("10");}),
+     new Command("place place place test 8", "m + h", () => {alert("11");}),
+     new Command("place place place test 9", "m + i", () => {alert("12");}),
+     new Command("place place place test 10", "b + c", () => {alert("13");}),
+     new Command("place place place test 11", "n + m", () => {alert("14");})
+      ]),
+      new GroupCommand("hao fuckboiz 123",[
+      new Command("place", "m", () => {alert("1");})
+      ]),
+            new GroupCommand("3123 123",[
+           new Command("place place place test 12", "m + v", () => {alert("15");}),
+     new Command("place place place test 13", "b + c", () => {alert("13");}),
+     new Command("place place place test 14", "s", () => {alert("a");}),
+     new Command("place place place test 15", "a+c", () => {alert("ac");}),
+     new Command("place place place test 16", "n + m", () => {alert("14");})
+      ])
+    ]});
 </script>
 
 <style>
