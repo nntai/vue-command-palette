@@ -38,16 +38,11 @@ import GroupCommand from "./models/groupCommand";
 
 import customerCommandGroupController from "./controllers/customerCommandGroupController";
 import CmpListGroup from "./components/CmpListGroup.vue";
+import lightweightFuzzy from "./places/lightweightFuzzy";
 const props = defineProps({
   modalKey: {
     type: String,
     default: "Control+k",
-  },
-  customerCommands: {
-    type: Array,
-    default: function(placeProps) {
-      return [];
-    }
   },
   customerCommandsByGroup: {
     type: Array,
@@ -76,7 +71,7 @@ const customerGroupCommandName = computed(() => {
   return customerGroupCommand.value.getCommandName();
 });
 
-
+lightweightFuzzy("place",props.customerCommandsByGroup);
 
 
 

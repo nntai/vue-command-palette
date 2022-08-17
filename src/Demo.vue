@@ -1,5 +1,5 @@
 <template>
-  <command-palette class="command-palette" :customerCommands="customerCommands" :customerCommandsByGroup="customerGroupCommands" :isDisplayByGroup="isDisplayByGroup"/>
+  <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands" :isDisplayByGroup="isDisplayByGroup"/>
   
 </template>
 
@@ -9,16 +9,16 @@ import Command from "./models/command";
 import { computed } from "vue";
 import GroupCommand from "./models/groupCommand";
    const isDisplayByGroup = computed(() => {
-    return false;
+    return true;
    });
   const customerCommands = computed(() => {
     return [new Command("place", "m", () => {alert("1");}),
      new Command("place place", "b", () => {alert("2");}),
-     new Command("place place place test 1", "Control+Shift+J", () => {alert("3");}),
-     new Command("place place place test 2place place place test 2place place place test 2place place place test 2", "B", () => {alert("4");}),
-     new Command("place place place test 3", "m + c", () => {alert("5");}),
-     new Command("place place place test 4", "m + d", () => {alert("6");}),
-     new Command("place place place test 5", "m + e", () => {alert("7");}),
+     new Command("pl place place test 1", "Control+Shift+J", () => {alert("3");}),
+     new Command("pl place place test 2place place place test 2place place place test 2place place place test 2", "B", () => {alert("4");}),
+     new Command("pla place place test 3", "m + c", () => {alert("5");}),
+     new Command("plac place place test 4", "m + d", () => {alert("6");}),
+     new Command("p place place test 5", "m + e", () => {alert("7");}),
      new Command("place place place test 6", "m + f", () => {alert("8");}),
      new Command("avbc", "m + t", () => {alert("9");}),
      new Command("place place place test 7", "m + g", () => {alert("10");}),
@@ -35,11 +35,11 @@ import GroupCommand from "./models/groupCommand";
   const customerGroupCommands = computed(() => {
     return [
       new GroupCommand("hao fuckboiz",[
-      new Command("place place", "b", () => {alert("2");}),
-     new Command("place place place test 1", "Control+Shift+J", () => {alert("3");}),
-     new Command("place place place test 2place place place test 2place place place test 2place place place test 2", "B", () => {alert("4");}),
-     new Command("place place place test 3", "m + c", () => {alert("5");}),
-     new Command("place place place test 4", "m + d", () => {alert("6");}),
+      new Command("12pl", "b", () => {alert("2");}),
+     new Command("pla", "Control+Shift+J", () => {alert("3");}),
+     new Command("pla place place test 2place place place test 2place place place test 2place place place test 2", "B", () => {alert("4");}),
+     new Command("pl", "m + c", () => {alert("5");}),
+     new Command("placae", "m + d", () => {alert("6");}),
      new Command("place place place test 5", "m + e", () => {alert("7");}),
      new Command("place place place test 6", "m + f", () => {alert("8");}),
      new Command("avbc", "m + t", () => {alert("9");}),
@@ -52,7 +52,7 @@ import GroupCommand from "./models/groupCommand";
      new Command("place place place test 11", "n + m", () => {alert("14");})
       ]),
       new GroupCommand("hao fuckboiz 123",[
-      new Command("place", "m", () => {alert("1");})
+      new Command("dasdv", "m", () => {alert("1");})
       ]),
             new GroupCommand("3123 123",[
            new Command("place place place test 12", "m + v", () => {alert("15");}),

@@ -3,6 +3,7 @@ import Command from "../models/command";
 import { getHighlights } from "../places/highlightText";
 import GroupCommand from "../models/groupCommand";
 import customerInputController from "./customerInputController";
+import lightweightFuzzy from "../places/lightweightFuzzy";
 export default function customerCommandGroupController(
   textInput: Ref<string>,
   commandsInput: GroupCommand[],
@@ -23,12 +24,15 @@ export default function customerCommandGroupController(
     textInputValue: string,
     commandsInput: GroupCommand[]
   ) {
+    let textInputRemoveSpecialChar = textInputValue.replaceAll(/[^\w\s]/gi, '');
+    console.log(textInputRemoveSpecialChar);
     let groupCommands: GroupCommand[] = [];
-
-    const regex = new RegExp(textInputValue);
+    let groupCommandsLeftover: GroupCommand[] = [];
+    const regex = new RegExp(textInputRemoveSpecialChar);
     // loop through every group
     for (let i: number = 0; i < commandsInput.length;++i){
         let commandItems: { command: Command; highlightArr: boolean[] }[] = [];
+        let commandItemsLeftover: { command: Command; highlightArr: boolean[] }[] = [];
         // loop through every command in each group
         for (let j: number = 0; j < commandsInput[i].getCommands().length;++j){
             let commandItem: { command: Command; highlightArr: boolean[] };
@@ -36,10 +40,12 @@ export default function customerCommandGroupController(
             // if one command match push in to the list
             if(regex.test(commandItem.command.getCommandName())){
                 commandItems.push({ command: commandItem.command, highlightArr:
-                            textInputValue != ""
-                              ? getHighlights(commandItem.command.getCommandName(), textInputValue)
+                  textInputRemoveSpecialChar != ""
+                              ? getHighlights(commandItem.command.getCommandName(), textInputRemoveSpecialChar)
                               : [], })
-            }   
+            }else{
+              commandItemsLeftover.push({command: commandItem.command, highlightArr:[]})
+            }
         }
         // after loop through one group of command if the length of the result list !== 0 then push into the result list
         if(commandItems.length !== 0){
@@ -47,6 +53,29 @@ export default function customerCommandGroupController(
             group.setCommandsHighlighted(commandItems);
             groupCommands.push(group);
         }
+        if (commandItemsLeftover.length !==0){
+          let group = new GroupCommand(commandsInput[i].getGroupName(),[]);
+            group.setCommandsHighlighted(commandItemsLeftover);
+            groupCommandsLeftover.push(group);
+        }
+    }
+    let fuzzySearchSortedArr: GroupCommand[] = lightweightFuzzy(textInputRemoveSpecialChar,groupCommandsLeftover);
+    console.log("leftover",fuzzySearchSortedArr);
+    // fuzzySearchSortedArr.findIndex((fuzzyElement: GroupCommand)=>{
+    //   return groupCommands.findIndex((element: GroupCommand)=>{
+    //     return fuzzyElement.getGroupName() === element.getGroupName();
+    //   })!==-1;
+    // })
+    for(let fuzzyIndex: number = 0; fuzzyIndex < fuzzySearchSortedArr.length;fuzzyIndex++){
+      let isExist: number;
+      isExist = groupCommands.findIndex((groupCommand: GroupCommand)=>{
+        return fuzzySearchSortedArr[fuzzyIndex].getGroupName()===groupCommand.getGroupName();
+      })
+      if(isExist>-1){
+        groupCommands[isExist].setCommandsHighlighted(groupCommands[isExist].getCommands().concat(fuzzySearchSortedArr[fuzzyIndex].getCommands()));
+      }else{
+        groupCommands.push(fuzzySearchSortedArr[fuzzyIndex]);
+      }
     }
     customerGroupCommands.value = groupCommands;
   }
@@ -57,9 +86,6 @@ export default function customerCommandGroupController(
   }
 
   function previousCustomerGroupCommand() {
-    // if (customerCommandGroupIndex.value - 1 > -1) {
-    //   updateCustomerCommand(customerCommandGroupIndex.value - 1);
-    // }
     if(customerCommandGroupIndex.value.index -1 > -1){
       updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex,customerCommandGroupIndex.value.index-1);
     }else{
@@ -70,9 +96,6 @@ export default function customerCommandGroupController(
   }
 
   function nextCustomerGroupCommand() {
-    // if (customerCommandGroupIndex.value + 1 < customerCommands.value.length) {
-    //   updateCustomerCommand(customerCommandGroupIndex.value + 1);
-    // }
     if(customerCommandGroupIndex.value.index + 1 < customerGroupCommands.value[customerCommandGroupIndex.value.groupIndex].getCommands().length){
       updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex, customerCommandGroupIndex.value.index+1);
     }else{
