@@ -38,12 +38,11 @@
 <style scoped>
   .is-highlighted {
     font-weight: bold;
-    color: rgb(12, 12, 12);
-    text-decoration: underline;
+    color: #42b883;
   }
   .cmp-list-is-active .is-highlighted {
     font-weight: bold;
-    color: white;
+    color: #ebebeb;
     text-decoration: underline;
   }
 </style>

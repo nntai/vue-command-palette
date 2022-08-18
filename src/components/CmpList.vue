@@ -118,7 +118,8 @@
 
   .cmp-list-left {
     text-align: left;
-    font-family: 'Open Sans';
+    
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   }
 
 
@@ -138,12 +139,13 @@
     white-space: nowrap; */
   width: 63px;
   height: 16px;
-  font-family: 'Open Sans';
+  
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 16px;
-  color: #BEC1CB;
+  color: rgba(235, 235,235,0.6);
   display:inline;
   text-transform: capitalize;
   }
@@ -157,6 +159,7 @@
     width: 100%;
     padding: 3% 2%;
     font-size: 15px;
+    color: rgba(235, 235,235,0.6);
   }
  ::-webkit-scrollbar {
   width: .5em;

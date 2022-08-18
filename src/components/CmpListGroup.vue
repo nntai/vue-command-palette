@@ -4,7 +4,7 @@
       <no-result />
     </div>
     <div v-else v-for="(customerGroupCommand, index) in props.customerGroupCommands" :key="index" ref="groupRef">
-      <div v-if="isDisplayByGroup" ref="groupNameRef">{{ customerGroupCommand.getGroupName() }}</div>
+      <div v-if="isDisplayByGroup" ref="groupNameRef" class="group-name">{{ customerGroupCommand.getGroupName() }}</div>
       <div v-for="(customerCommand, cmpIndex) in customerGroupCommand.getCommands()" :key="cmpIndex" ref="commandRef"
         :class="{ 'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true, }"
         @mouseover="() => { props.onGroupCommandHovered(index, cmpIndex); }"
@@ -165,13 +165,13 @@ watch(props.groupCommandIndex.groupCommandIndexValue, (value) => {
       //   totalLength += root2.value[i].clientHeight;
       //  }
       for (let i: number = 0; i < value.groupIndex; i++) {
-        totalLength += groupRef.value[i].clientHeight;
+        totalLength += groupRef.value[i].clientHeight +10;
       }
       if (groupNameRef.value !== null) {
         totalLength += groupNameRef.value[value.groupIndex].clientHeight;
       }
       for (let i: number = 0; i < value.index + 1; i++) {
-        totalLength += commandRef.value[i].clientHeight;
+        totalLength += commandRef.value[i].clientHeight +10;
       }
       if (totalLength > root.value.scrollTop + root.value.clientHeight) {
         root.value.scrollTop = totalLength - root.value.clientHeight;
@@ -185,13 +185,13 @@ watch(props.groupCommandIndex.groupCommandIndexValue, (value) => {
     if (props.customerGroupCommands.length !== 0) {
       let totalLength = 0;
       for (let i: number = 0; i < value.groupIndex; i++) {
-        totalLength += groupRef.value[i].clientHeight;
+        totalLength += groupRef.value[i].clientHeight +10;
       }
       if (groupNameRef.value !== null) {
         totalLength += groupNameRef.value[value.groupIndex].clientHeight;
       }
       for (let i: number = 0; i < value.index; i++) {
-        totalLength += commandRef.value[i].clientHeight;
+        totalLength += commandRef.value[i].clientHeight +10;
       }
       if (totalLength < root.value.scrollTop) {
         root.value.scrollTop = totalLength;
@@ -239,7 +239,8 @@ onMounted(() => {
 
 .cmp-list-left {
   text-align: left;
-  font-family: 'Open Sans';
+  
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 
@@ -248,19 +249,9 @@ onMounted(() => {
 }
 
 .key {
-  /* display: inline;
-    border: 2px solid black; 
-    box-shadow: 2px 2px black; 
-    font-size: .85em; 
-    line-height: .85em; 
-    display: inline-block;
-    font-weight: 600;
-    letter-spacing: .05em; 
-    padding: 3px 5px;
-    white-space: nowrap; */
   width: 63px;
   height: 16px;
-  font-family: 'Open Sans';
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -270,17 +261,22 @@ onMounted(() => {
   text-transform: capitalize;
 }
 
-.cmp-list-is-active {
+ .cmp-list-is-active {
+  box-sizing: border-box;
   border-radius: 4px;
-  border: #7AE1AA 1px solid;
-  background-color: #7AE1AA;
+  background-color: #42b883 !important;
   color: white;
 }
 
 .cmp-list-item {
+  box-sizing: border-box;
+  border-radius: 4px;
   width: 100%;
   padding: 3% 2%;
+  margin-bottom: 10px;
+  background-color:#2f2f2f ;
   font-size: 15px;
+  color: rgba(235, 235,235,0.6);
 }
 
 ::-webkit-scrollbar {
@@ -291,6 +287,11 @@ onMounted(() => {
   background-color: darkgrey;
   border-radius: 5px;
 }
+.group-name{
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  color: rgb(66, 184, 131);
+  }
 </style>
 
 

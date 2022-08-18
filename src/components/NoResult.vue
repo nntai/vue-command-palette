@@ -10,7 +10,8 @@
 <style scoped>
 .no-research{
 text-align: center;
-font-family: 'Open Sans';
+
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 font-style: normal;
 font-weight: 400;
 font-size: 20px;

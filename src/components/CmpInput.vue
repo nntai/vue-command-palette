@@ -54,17 +54,17 @@
     display: inline;
     width: 10%;
     padding: 10px;
-    color:#7AE1AA;
+    color:#42b883;
     font-size: 20px;
   }
   .input-place{
+    background-color:#2f2f2f ;
   width: 85%;
-  padding: 10px;
   outline: none;
   border:none;
 }
 input{
-  font-family: 'Open Sans';
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 20px;
 }
 .input-place:focus{

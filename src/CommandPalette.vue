@@ -97,13 +97,10 @@ const groupCommandIndex = computed(() => {
 </script>
 
 <style scoped>
-:root{
-  --white: #ffffff;
-}
 .command-palette-wrapper {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: rgba(36,36,36,1);
   width: 50%;
   padding: 8px;
   border-radius: 4px;
@@ -126,16 +123,13 @@ const groupCommandIndex = computed(() => {
   padding: 4% 3%;
   flex: 1;
 }.cmp-input {
-  max-height: 100px;
-  background: #FFFFFF;
+  background: #2f2f2f;
   mix-blend-mode: normal;
-  border: 1px solid #EDEDED;
- box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
-  
+  border: 1px solid #42b883;
+  border-radius: 4px;
 }
 .cmp-input:hover{
   outline: none;
-  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
 }
 .cmp-list {
   padding: 0% 3%;
