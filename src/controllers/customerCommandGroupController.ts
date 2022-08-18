@@ -25,10 +25,9 @@ export default function customerCommandGroupController(
     commandsInput: GroupCommand[]
   ) {
     let textInputRemoveSpecialChar = textInputValue.replaceAll(/[^\w\s]/gi, '');
-    console.log(textInputRemoveSpecialChar);
     let groupCommands: GroupCommand[] = [];
     let groupCommandsLeftover: GroupCommand[] = [];
-    const regex = new RegExp(textInputRemoveSpecialChar);
+    const regex = new RegExp(textInputRemoveSpecialChar.toLowerCase());
     // loop through every group
     for (let i: number = 0; i < commandsInput.length;++i){
         let commandItems: { command: Command; highlightArr: boolean[] }[] = [];
@@ -38,10 +37,10 @@ export default function customerCommandGroupController(
             let commandItem: { command: Command; highlightArr: boolean[] };
             commandItem = commandsInput[i].getCommands()[j];
             // if one command match push in to the list
-            if(regex.test(commandItem.command.getCommandName())){
+            if(regex.test(commandItem.command.getCommandName().toLowerCase())){
                 commandItems.push({ command: commandItem.command, highlightArr:
-                  textInputRemoveSpecialChar != ""
-                              ? getHighlights(commandItem.command.getCommandName(), textInputRemoveSpecialChar)
+                  textInputRemoveSpecialChar.toLowerCase() != ""
+                              ? getHighlights(commandItem.command.getCommandName().toLowerCase(), textInputRemoveSpecialChar.toLowerCase())
                               : [], })
             }else{
               commandItemsLeftover.push({command: commandItem.command, highlightArr:[]})
@@ -53,13 +52,13 @@ export default function customerCommandGroupController(
             group.setCommandsHighlighted(commandItems);
             groupCommands.push(group);
         }
-        if (commandItemsLeftover.length !==0){
+        if (commandItemsLeftover.length !== 0){
           let group = new GroupCommand(commandsInput[i].getGroupName(),[]);
             group.setCommandsHighlighted(commandItemsLeftover);
             groupCommandsLeftover.push(group);
         }
     }
-    let fuzzySearchSortedArr: GroupCommand[] = lightweightFuzzy(textInputRemoveSpecialChar,groupCommandsLeftover);
+    let fuzzySearchSortedArr: GroupCommand[] = lightweightFuzzy(textInputRemoveSpecialChar.toLowerCase(),groupCommandsLeftover);
     console.log("leftover",fuzzySearchSortedArr);
     // fuzzySearchSortedArr.findIndex((fuzzyElement: GroupCommand)=>{
     //   return groupCommands.findIndex((element: GroupCommand)=>{
@@ -85,23 +84,28 @@ export default function customerCommandGroupController(
     customerCommandGroupIndex.value = {groupIndex:groupIndex,index:index};
   }
 
+  
   function previousCustomerGroupCommand() {
-    if(customerCommandGroupIndex.value.index -1 > -1){
-      updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex,customerCommandGroupIndex.value.index-1);
-    }else{
-        if (customerCommandGroupIndex.value.groupIndex -1 > -1){
-            updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex -1,customerGroupCommands.value[customerCommandGroupIndex.value.groupIndex -1].getCommands().length-1);    
-        }
+    if(customerGroupCommands.value.length !== 0){
+      if(customerCommandGroupIndex.value.index -1 > -1){
+        updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex,customerCommandGroupIndex.value.index-1);
+      }else{
+          if (customerCommandGroupIndex.value.groupIndex -1 > -1){
+              updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex -1,customerGroupCommands.value[customerCommandGroupIndex.value.groupIndex -1].getCommands().length-1);    
+          }
+      }
     }
   }
 
   function nextCustomerGroupCommand() {
-    if(customerCommandGroupIndex.value.index + 1 < customerGroupCommands.value[customerCommandGroupIndex.value.groupIndex].getCommands().length){
-      updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex, customerCommandGroupIndex.value.index+1);
-    }else{
-        if(customerCommandGroupIndex.value.groupIndex + 1 < customerGroupCommands.value.length ){
-          updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex + 1, 0);        
-        }
+    if(customerGroupCommands.value.length !== 0) {
+      if(customerCommandGroupIndex.value.index + 1 < customerGroupCommands.value[customerCommandGroupIndex.value.groupIndex].getCommands().length){
+        updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex, customerCommandGroupIndex.value.index+1);
+      }else{
+          if(customerCommandGroupIndex.value.groupIndex + 1 < customerGroupCommands.value.length ){
+            updateCustomerGroupCommand(customerCommandGroupIndex.value.groupIndex + 1, 0);        
+          }
+      }
     }
   }
 

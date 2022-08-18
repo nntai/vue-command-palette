@@ -1,6 +1,7 @@
 <template>
-  <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands" :isDisplayByGroup="isDisplayByGroup"/>
-  
+  <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands"
+    :isDisplayByGroup="isDisplayByGroup" />
+
 </template>
 
 <script setup lang="ts">
@@ -8,69 +9,48 @@ import CommandPalette from "./CommandPalette.vue";
 import Command from "./models/command";
 import { computed } from "vue";
 import GroupCommand from "./models/groupCommand";
-   const isDisplayByGroup = computed(() => {
-    return true;
-   });
-  const customerCommands = computed(() => {
-    return [new Command("place", "m", () => {alert("1");}),
-     new Command("place place", "b", () => {alert("2");}),
-     new Command("pl place place test 1", "Control+Shift+J", () => {alert("3");}),
-     new Command("pl place place test 2place place place test 2place place place test 2place place place test 2", "B", () => {alert("4");}),
-     new Command("pla place place test 3", "m + c", () => {alert("5");}),
-     new Command("plac place place test 4", "m + d", () => {alert("6");}),
-     new Command("p place place test 5", "m + e", () => {alert("7");}),
-     new Command("place place place test 6", "m + f", () => {alert("8");}),
-     new Command("avbc", "m + t", () => {alert("9");}),
-     new Command("place place place test 7", "m + g", () => {alert("10");}),
-     new Command("place place place test 8", "m + h", () => {alert("11");}),
-     new Command("place place place test 9", "m + i", () => {alert("12");}),
-     new Command("place place place test 10", "b + c", () => {alert("13");}),
-     new Command("place place place test 11", "n + m", () => {alert("14");}),
-     new Command("place place place test 12", "m + v", () => {alert("15");}),
-     new Command("place place place test 13", "b + c", () => {alert("13");}),
-     new Command("place place place test 14", "s", () => {alert("a");}),
-     new Command("place place place test 15", "a+c", () => {alert("ac");}),
-     new Command("place place place test 16", "n + m", () => {alert("14");})]
-  });
-  const customerGroupCommands = computed(() => {
-    return [
-      new GroupCommand("hao fuckboiz",[
-      new Command("12pl", "b", () => {alert("2");}),
-     new Command("pla", "Control+Shift+J", () => {alert("3");}),
-     new Command("pla place place test 2place place place test 2place place place test 2place place place test 2", "B", () => {alert("4");}),
-     new Command("pl", "m + c", () => {alert("5");}),
-     new Command("placae", "m + d", () => {alert("6");}),
-     new Command("place place place test 5", "m + e", () => {alert("7");}),
-     new Command("place place place test 6", "m + f", () => {alert("8");}),
-     new Command("avbc", "m + t", () => {alert("9");}),
-      ]),
-      new GroupCommand("dat goodboiz",[
-      new Command("place place place test 7", "m + g", () => {alert("10");}),
-     new Command("place place place test 8", "m + h", () => {alert("11");}),
-     new Command("place place place test 9", "m + i", () => {alert("12");}),
-     new Command("place place place test 10", "b + c", () => {alert("13");}),
-     new Command("place place place test 11", "n + m", () => {alert("14");})
-      ]),
-      new GroupCommand("hao fuckboiz 123",[
-      new Command("dasdv", "m", () => {alert("1");})
-      ]),
-            new GroupCommand("3123 123",[
-           new Command("place place place test 12", "m + v", () => {alert("15");}),
-     new Command("place place place test 13", "b + c", () => {alert("13");}),
-     new Command("place place place test 14", "s", () => {alert("a");}),
-     new Command("place place place test 15", "a+c", () => {alert("ac");}),
-     new Command("place place place test 16", "n + m", () => {alert("14");})
-      ])
-    ]});
+const isDisplayByGroup = computed(() => {
+  return true;
+});
+const customerGroupCommands = computed(() => {
+  return [
+    new GroupCommand("Asia", [
+      new Command("Armenia", "B", () => { alert("2"); }),
+      new Command("Brunei", "Control+Shift+J", () => { alert("3"); }),
+      new Command("China", "u+i", () => { alert("4"); }),
+      new Command("Hong Kong", "m + c", () => { alert("5"); }),
+    ]),
+    new GroupCommand("Europe", [
+      new Command("Austria", "m + g", () => { alert("10"); }),
+      new Command("Bangladesh", "m + h", () => { alert("11"); }),
+      new Command("Czech Republic", "m+i", () => { alert("12"); }),
+      new Command("Denmark", "b + c", () => { alert("13"); }),
+    ]),
+    new GroupCommand("South America", [
+      new Command("Argentina", "z+h", () => { alert("1"); }),
+      new Command("Brazil", "z+k", () => { alert("1"); }),
+      new Command("Colombia", "z+l", () => { alert("1"); }),
+      new Command("Ecuador", "z+q", () => { alert("1"); }),
+    ]),
+    new GroupCommand("Africa", [
+      new Command("Cameroon", "o+e", () => { alert("1"); }),
+      new Command("Nigeria", "p+e", () => { alert("1"); }),
+      new Command("Egypt", "t+e", () => { alert("1"); }),
+      new Command("Algeria", "k+e", () => { alert("1"); }),
+    ])
+  ]
+});
 </script>
 
 <style>
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0px;
 }
+
 #app {
   display: flex;
   flex: 1;
@@ -80,10 +60,11 @@ body {
   padding: 8px;
   background-color: #839742
 }
+
 .command-palette {
-  
+
   padding: 15% 0% 0% 30%;
 
-  background: rgba(0, 0, 0,  0.5)
+  background: rgba(0, 0, 0, 0.5)
 }
 </style>

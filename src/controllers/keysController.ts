@@ -43,7 +43,7 @@ export default function keysController(
 
       addKey(e.key);
     } else {
-      if (e.key === upKey || e.key === downKey) {
+      if (e.key === upKey || e.key === downKey || e.key === closeKey) {
         e.preventDefault();
         addKey(e.key);
       }
@@ -57,10 +57,15 @@ export default function keysController(
   }) {
     if (e.target.tagName !== "INPUT") {
       e.preventDefault();
-
+      if(e.key===upKey){
+        isArrowUp.value = false;
+      }
+      if(e.key===downKey){
+        isArrowDown.value=false;
+      }
       deleteKey(e.key);
     } else {
-      if (e.key === upKey || e.key === downKey) {
+      if (e.key === upKey || e.key === downKey || e.key === closeKey) {
         e.preventDefault();
 
         if(e.key===upKey){
@@ -76,7 +81,6 @@ export default function keysController(
 
   function isCustomerKey(key: string) {
     let isIn: boolean = false;
-
     if (isCorrectKey(keys.value, key)) {
       isIn = true;
     }
@@ -146,32 +150,40 @@ export default function keysController(
         onModalChange(false);
         isIn = true;
       }
-
+      let isExecuted: boolean = false;
       for (let i: number = 0; i < customerGroupCommands.length; ++i) {
-        for (let j:number = 0; j < customerGroupCommands[i].getCommands().length;j ++){
-          if (isCustomerKey(customerGroupCommands[i].getCommands()[j].command.getCommandKey())) {
-            let action: Function = () => {};
-  
-            action = customerGroupCommands[i].getCommands()[j].command.getCommandAction();
-  
-            action();
-  
-            onModalChange(false);
-  
-            isIn = true;
+        if(isExecuted){
+          break;
+        } else {
+          for (let j:number = 0; j < customerGroupCommands[i].getCommands().length;j ++){
+            if (isCustomerKey(customerGroupCommands[i].getCommands()[j].command.getCommandKey())) {
+              let action: Function = () => {};
+    
+              action = customerGroupCommands[i].getCommands()[j].command.getCommandAction();
+    
+              action();
+    
+              onModalChange(false);
+    
+              isIn = true;
+              
+              isExecuted = true;
+
+              break;
+            }
           }
         }
       }
 
       if (isDownKey()) {
-        nextCustomerGroupCommand();
         isArrowDown.value = true;
+        nextCustomerGroupCommand();
         isIn = true;
       }
 
       if (isUpKey()) {
-        previousCustomerGroupCommand();
         isArrowUp.value = true;
+        previousCustomerGroupCommand();
         isIn = true;
       }
 

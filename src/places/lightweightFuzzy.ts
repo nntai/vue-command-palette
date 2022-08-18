@@ -38,6 +38,7 @@ export default function lightweightFuzzy(
       for (let index: number = 0; index < inputCharArr.length; index++) {
         let currentIndex: number = 0;
         currentIndex = commandName
+          .toLowerCase()
           .substring(position, lastIndex)
           .indexOf(inputCharArr[index]);
         if (currentIndex == -1) {
