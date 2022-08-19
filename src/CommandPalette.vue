@@ -2,8 +2,16 @@
   <div v-show="isModal" class="command-palette-place">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
-        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" />
-        <cmp-list class="cmp-list" :customerCommands="customerCommands" :customerCommandName="customerCommandName" :onCommandHovered="updateCustomerCommand"  :closeModal="closeModal" :searchPhrase="customerInput"/>
+        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"/>
+        <cmp-list-group class="cmp-list" :customerGroupCommands="customerGroupCommands" :customerGroupCommandName="customerGroupCommandName" :onGroupCommandHovered="updateCustomerGroupCommand" :closeModal="closeModal" :isArrowDown="isArrowDown" :isArrowUp="isArrowUp" :groupCommandIndex="groupCommandIndex" :isDisplayByGroup="isDisplayByGroup" >
+          <template v-slot:cmd-name="{commandName}">
+            <slot name="cmd-name" :commandName="commandName" />
+          </template>
+          <template v-slot:cmd-key="{commandKey}">
+            <slot name="cmd-key" :commandKey="commandKey" />
+          </template>
+        </cmp-list-group>
+        <cmp-footer class="cmp-footer" />
       </form>
     </div>
   </div>
@@ -11,7 +19,7 @@
 <script setup lang="ts">
 import CmpInput from "./components/CmpInput.vue";
 import CmpList from "./components/CmpList.vue";
-
+import CmpFooter from "./components/CmpFooter.vue";
 import keysController from "./controllers/keysController";
 
 import customerInputController from "./controllers/customerInputController";
@@ -26,38 +34,65 @@ import { vClickOutside } from "./directives/vClickOutside";
 
 import Command from "./models/command";
 
+import GroupCommand from "./models/groupCommand";
 
+import customerCommandGroupController from "./controllers/customerCommandGroupController";
+import CmpListGroup from "./components/CmpListGroup.vue";
+import lightweightFuzzy from "./places/lightweightFuzzy";
 const props = defineProps({
   modalKey: {
     type: String,
     default: "Control+k",
   },
-  customerCommands: {
+  customerCommandsByGroup: {
     type: Array,
     default: function(placeProps) {
       return [];
     }
+  },
+  isDisplayByGroup:{
+    type: Boolean,
+    default: false
   }
 });
-
-const { customerInput, clearText } = customerInputController();
-const { customerCommands, customerCommand, updateCustomerCommand, previousCustomerCommand, nextCustomerCommand, commandRefresh } = customerCommandController(customerInput, props.customerCommands);
-const { isModal, onModalChange, closeModal } = modalController(() => { commandRefresh(); clearText(); });
+const { customerInput, clearText, isTextCleared } = customerInputController();
+const { customerGroupCommands, customerGroupCommand, customerCommandGroupIndex, updateCustomerGroupCommand, previousCustomerGroupCommand, nextCustomerGroupCommand, commandGroupRefresh } = customerCommandGroupController(customerInput, props.customerCommandsByGroup, isTextCleared);
+const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandGroupRefresh(); });
 const onEnterKey = () => {
   let action: Function = () => {};
-  action = customerCommand.value.getCommandAction();
+  action = customerGroupCommand.value.getCommandAction();
   action();
   closeModal();
 };
 const customerCommandName = computed(() => {
   return customerCommand.value.getCommandName();
 });
+const customerGroupCommandName = computed(() => {
+  return customerGroupCommand.value.getCommandName();
+});
 
+lightweightFuzzy("place",props.customerCommandsByGroup);
 
 
 
 const updateText = (value: string) => {customerInput.value = value;};
-const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommands, previousCustomerCommand, nextCustomerCommand, onEnterKey);
+const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommandsByGroup, previousCustomerGroupCommand, nextCustomerGroupCommand, onEnterKey);
+
+const isModalOpened = computed(() => {
+  return {isModalValue: isModal};
+});
+const isArrowDown = computed(() => {
+  return {isArrowDownValue: keysInputController.isArrowDown};
+});
+const isArrowUp = computed(() => {
+  return {isArrowUpValue: keysInputController.isArrowUp};
+});
+const commandIndex = computed(() => {
+  return {commandIndexValue: customerCommandIndex};
+});
+const groupCommandIndex = computed(() => {
+  return {groupCommandIndexValue: customerCommandGroupIndex};
+});
 
 </script>
 
@@ -65,8 +100,8 @@ const keysInputController = keysController(onModalChange, props.modalKey, props.
 .command-palette-wrapper {
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
-  width: 100%;
+  background-color: rgba(36,36,36,1);
+  width: 50%;
   padding: 8px;
   border-radius: 4px;
 }
@@ -76,28 +111,28 @@ const keysInputController = keysController(onModalChange, props.modalKey, props.
   left: 0;
   right: 0;
   bottom: 0;
+  padding-top: 3%;
 }
 .cmp-input,
 .cmp-list {
   flex: 1;
 }
-.cmp-input {
-  max-height: 50px;
-  background: #FFFFFF;
+.cmp-input,
+.cmp-list,
+.cmp-footer {
+  padding: 4% 3%;
+  flex: 1;
+}.cmp-input {
+  background: #2f2f2f;
   mix-blend-mode: normal;
-  /* Gray/200 (Border-B2, Gray-G2, Light-L2)) */
-
-  border: 1px solid #EDEDED;
-
- box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
-  
+  border: 1px solid #42b883;
+  border-radius: 4px;
 }
 .cmp-input:hover{
   outline: none;
-
-  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.04);
 }
 .cmp-list {
+  padding: 0% 3%;
   margin-top: 10px;
 }
 </style>

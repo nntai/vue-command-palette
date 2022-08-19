@@ -1,18 +1,22 @@
 <template>
   <div>
-  <div></div>
-    <!-- <div v-for="(customerCommand, index) in props.customerCommands" :key="index" :class="{'cmp-list-is-active': isCommandActive(customerCommand.getCommandName())}" @mouseover="() => {props.onCommandHovered(index);}" @click="() => {customerCommand.getCommandAction()(); props.closeModal();}">
-      <div class="cmp-list cmp-list-left">{{customerCommand.getCommandName()}}</div>
-      <div class="cmp-list cmp-list-right">{{customerCommand.getCommandKey()}}</div>
-    </div> -->
     <div>
-        <div>NO RESULT</div>
+        <div class="no-research">No recent researches</div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 </script>
 <style scoped>
-  
+.no-research{
+text-align: center;
 
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 16px;
+color: #BEC1CB;
+}
+  
 </style>

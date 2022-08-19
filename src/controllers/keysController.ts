@@ -2,17 +2,18 @@ import { ref, Ref, computed, watch, onMounted } from "vue";
 
 import { isCorrectKey } from "../places/firstPlace";
 import Command from "../models/command";
-
+import GroupCommand from "../models/groupCommand";
 export default function keysController(
   onModalChange: Function,
   modalKey: string,
-  customerCommands: Command[],
-  previousCustomerCommand: Function,
-  nextCustomerCommand: Function,
+  customerGroupCommands: GroupCommand[],
+  previousCustomerGroupCommand: Function,
+  nextCustomerGroupCommand: Function,
   onEnterKey: Function
 ) {
   const keys: Ref<string[]> = ref([]);
-
+  const isArrowUp: Ref<boolean> = ref(false);
+  const isArrowDown: Ref<boolean> = ref(false);
   const closeKey: string = "Escape";
   const downKey: string = "ArrowDown";
 
@@ -37,10 +38,15 @@ export default function keysController(
     preventDefault: Function;
     key: string;
   }) {
-    if (e.target.tagName != "INPUT") {
+    if (e.target.tagName !== "INPUT") {
       e.preventDefault();
 
       addKey(e.key);
+    } else {
+      if (e.key === upKey || e.key === downKey || e.key === closeKey) {
+        e.preventDefault();
+        addKey(e.key);
+      }
     }
   }
 
@@ -49,16 +55,32 @@ export default function keysController(
     preventDefault: Function;
     key: string;
   }) {
-    if (e.target.tagName != "INPUT") {
+    if (e.target.tagName !== "INPUT") {
       e.preventDefault();
-
+      if(e.key===upKey){
+        isArrowUp.value = false;
+      }
+      if(e.key===downKey){
+        isArrowDown.value=false;
+      }
       deleteKey(e.key);
+    } else {
+      if (e.key === upKey || e.key === downKey || e.key === closeKey) {
+        e.preventDefault();
+
+        if(e.key===upKey){
+          isArrowUp.value = false;
+        }
+        if(e.key===downKey){
+          isArrowDown.value=false;
+        }
+        deleteKey(e.key);
+      }
     }
   }
 
   function isCustomerKey(key: string) {
     let isIn: boolean = false;
-
     if (isCorrectKey(keys.value, key)) {
       isIn = true;
     }
@@ -78,7 +100,7 @@ export default function keysController(
 
   function isDownKey() {
     let isIn: boolean = false;
-
+    
     if (isCustomerKey(downKey)) {
       isIn = true;
     }
@@ -128,27 +150,40 @@ export default function keysController(
         onModalChange(false);
         isIn = true;
       }
+      let isExecuted: boolean = false;
+      for (let i: number = 0; i < customerGroupCommands.length; ++i) {
+        if(isExecuted){
+          break;
+        } else {
+          for (let j:number = 0; j < customerGroupCommands[i].getCommands().length;j ++){
+            if (isCustomerKey(customerGroupCommands[i].getCommands()[j].command.getCommandKey())) {
+              let action: Function = () => {};
+    
+              action = customerGroupCommands[i].getCommands()[j].command.getCommandAction();
+    
+              action();
+    
+              onModalChange(false);
+    
+              isIn = true;
+              
+              isExecuted = true;
 
-      for (let i: number = 0; i < customerCommands.length; ++i) {
-        if (isCustomerKey(customerCommands[i].getCommandKey())) {
-          let action: Function = () => {};
-
-          action = customerCommands[i].getCommandAction();
-
-          action();
-
-          isIn = true;
+              break;
+            }
+          }
         }
       }
 
       if (isDownKey()) {
-        nextCustomerCommand();
+        isArrowDown.value = true;
+        nextCustomerGroupCommand();
         isIn = true;
       }
 
       if (isUpKey()) {
-        previousCustomerCommand();
-
+        isArrowUp.value = true;
+        previousCustomerGroupCommand();
         isIn = true;
       }
 
@@ -172,5 +207,7 @@ export default function keysController(
     onKeyUpInput,
     isCustomerKey,
     isCloseKey,
+    isArrowDown,
+    isArrowUp
   };
 }

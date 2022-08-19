@@ -2,14 +2,14 @@ import { expect, it } from "vitest";
 import { isCorrectKey } from "./firstPlace.ts";
 
 describe(
-  "is text", () => {
+  "is correct key", () => {
     it(
-      "is text", () => {
+      "is correct key", () => {
         expect(isCorrectKey(["Control", "k"], "Control+k") === true);
       }
     );
 
-    it("is text", () => {
+    it("is correct key", () => {
       expect(isCorrectKey(["Control", "k"], "Control k") === false);
     });
   }
