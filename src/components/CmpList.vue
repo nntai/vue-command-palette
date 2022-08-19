@@ -125,6 +125,8 @@
 
   .cmp-list-right {
     text-align: right;
+    font-family: 'Open Sans';
+    color: #BEC1CB;
   }
   .key {
     /* display: inline;

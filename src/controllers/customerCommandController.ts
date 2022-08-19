@@ -21,7 +21,6 @@ export default function customerCommandController(
     let commands: { command: Command; highlightArr: boolean[] }[] = [];
 
     const regex = new RegExp(textInputValue);
-
     for (let i: number = 0; i < commandsInput.length; ++i) {
       if (regex.test(commandsInput[i].getCommandName())) {
         commands.push({
@@ -38,7 +37,7 @@ export default function customerCommandController(
   }
 
   function updateCustomerCommand(index: number) {
-    customerCommand.value = customerCommands.value[index].command;
+    customerCommand.value = customerCommands.value[index].command.command;
 
     customerCommandIndex.value = index;
   }
