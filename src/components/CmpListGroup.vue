@@ -36,47 +36,47 @@ const props = defineProps({
     type: Function,
     default: function () {
       return "";
-    }
+    },
   },
   isArrowUp: {
     type: Object,
     default: function () {
       return {};
-    }
+    },
   },
   isArrowDown: {
     type: Object,
     default: function () {
       return {};
-    }
+    },
   },
   /*GROUP COMMENT DECLARATION DO NOT TOUCH - HAO*/
   customerGroupCommands: {
     type: Array,
     default: function (placeProps) {
       return [];
-    }
+    },
   },
   customerGroupCommandName: {
     type: String,
-    default: ""
+    default: "",
   },
   onGroupCommandHovered: {
     type: Function,
     default: function () {
       return "";
-    }
+    },
   },
   groupCommandIndex: {
     type: Object,
     default: function () {
       return {};
-    }
+    },
   },
   isDisplayByGroup: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const isCommandActive = (commandName: string) => {
@@ -97,13 +97,13 @@ const isCommandActive = (commandName: string) => {
   height: 20px;
 }
 
-
 .cmp-list-left {
   text-align: left;
-  
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-}
 
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
 
 .cmp-list-right {
   text-align: right;
@@ -112,20 +112,22 @@ const isCommandActive = (commandName: string) => {
 .key {
   width: 63px;
   height: 16px;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 16px;
-  color: #BEC1CB;
+  color: var(--primary-color1);
   display: inline;
   text-transform: capitalize;
 }
 
- .cmp-list-is-active {
+.cmp-list-is-active {
   box-sizing: border-box;
   border-radius: 4px;
-  background-color: #42b883 !important;
+  background-color:var(--primary-color)!important;
   color: white;
 }
 
@@ -135,24 +137,24 @@ const isCommandActive = (commandName: string) => {
   width: 100%;
   padding: 3% 2%;
   margin-bottom: 10px;
-  background-color:#2f2f2f ;
+  background-color: var(--secondary-color-reverser);
   font-size: 15px;
-  color: rgba(235, 235,235,0.6);
+  color: var(--text-color);
 }
 
 ::-webkit-scrollbar {
-  width: .5em;
+  width: 0.5em;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
+  background-color: var(--scroll-bar-color);
   border-radius: 5px;
 }
-.group-name{
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+.group-name {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   font-size: 16px;
-  color: rgb(66, 184, 131);
-  }
+  color:var(--primary-color);
+}
 </style>
-
-

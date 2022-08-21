@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isModal" class="command-palette-place">
+  <div v-show="isModal" class='command-palette-place' :class="props.themeMode">
     <div class="command-palette-wrapper" v-click-outside="closeModal">
       <form @submit.prevent="onEnterKey">
         <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"/>
@@ -39,6 +39,7 @@ import GroupCommand from "./models/groupCommand";
 import customerCommandGroupController from "./controllers/customerCommandGroupController";
 import CmpListGroup from "./components/CmpListGroup.vue";
 import lightweightFuzzy from "./places/lightweightFuzzy";
+import "./style/style.css"
 const props = defineProps({
   modalKey: {
     type: String,
@@ -53,6 +54,13 @@ const props = defineProps({
   isDisplayByGroup:{
     type: Boolean,
     default: false
+  },
+  themeMode:{
+    type: Object,
+    default:{
+      dark: true,
+      light: false
+    }
   }
 });
 const { customerInput, clearText, isTextCleared } = customerInputController();
@@ -100,7 +108,7 @@ const groupCommandIndex = computed(() => {
 .command-palette-wrapper {
   display: flex;
   flex-direction: column;
-  background-color: rgba(36,36,36,1);
+  background-color: var(--secondary-color-reverse);
   width: 50%;
   padding: 8px;
   border-radius: 4px;
@@ -123,9 +131,9 @@ const groupCommandIndex = computed(() => {
   padding: 4% 3%;
   flex: 1;
 }.cmp-input {
-  background: #2f2f2f;
+  background: var(--secondary-color-reverse-lighter);
   mix-blend-mode: normal;
-  border: 1px solid #42b883;
+  border: 1px solid var(--primary-color);
   border-radius: 4px;
 }
 .cmp-input:hover{

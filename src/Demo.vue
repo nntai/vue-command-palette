@@ -1,17 +1,26 @@
 <template>
-  <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands"
-    :isDisplayByGroup="isDisplayByGroup" />
+    <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands" :themeMode="themeMode"
+    :isDisplayByGroup="!isDisplayByGroup" />
 
 </template>
 
 <script setup lang="ts">
 import CommandPalette from "./CommandPalette.vue";
 import Command from "./models/command";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import GroupCommand from "./models/groupCommand";
+
 const isDisplayByGroup = computed(() => {
   return true;
 });
+const themeMode = ref({
+  dark: true,
+  light: false
+});
+const changeTheme=()=>{
+  themeMode.value.dark=!themeMode.value.dark;
+  themeMode.value.light=!themeMode.value.light;
+};
 const customerGroupCommands = computed(() => {
   return [
     new GroupCommand("Asia", [
@@ -37,6 +46,10 @@ const customerGroupCommands = computed(() => {
       new Command("Nigeria", "p+e", () => { alert("1"); }),
       new Command("Egypt", "t+e", () => { alert("1"); }),
       new Command("Algeria", "k+e", () => { alert("1"); }),
+    ]),
+    new GroupCommand("Change theme", [
+      new Command("Switch theme", "Crlt + Shift + T", () => {changeTheme();}),
+      new Command("Test", "p+e", () => { }),
     ])
   ]
 });
@@ -52,6 +65,7 @@ body {
 }
 
 #app {
+
   display: flex;
   flex: 1;
   width: 100vw;
