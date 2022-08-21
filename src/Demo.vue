@@ -16,7 +16,7 @@ const customerGroupCommands = computed(() => {
   return [
     new GroupCommand("Asia", [
       new Command("Armenia", "B", () => { alert("2"); }),
-      new Command("Brunei", "Control+Shift+J", () => { alert("3"); }),
+      new Command("Brunei", "Control+Shift+B", () => { alert("3"); }),
       new Command("China", "u+i", () => { alert("4"); }),
       new Command("Hong Kong", "m + c", () => { alert("5"); }),
     ]),

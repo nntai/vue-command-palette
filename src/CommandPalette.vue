@@ -56,8 +56,8 @@ const props = defineProps({
   }
 });
 const { customerInput, clearText, isTextCleared } = customerInputController();
-const { customerGroupCommands, customerGroupCommand, customerCommandGroupIndex, updateCustomerGroupCommand, previousCustomerGroupCommand, nextCustomerGroupCommand, commandGroupRefresh } = customerCommandGroupController(customerInput, props.customerCommandsByGroup, isTextCleared);
-const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandGroupRefresh(); });
+const { customerGroupCommands, customerGroupCommand, customerCommandGroupIndex, updateCustomerGroupCommand, previousCustomerGroupCommand, nextCustomerGroupCommand, commandGroupRefresh, getAllCommands } = customerCommandGroupController(customerInput, props.customerCommandsByGroup, isTextCleared);
+const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandGroupRefresh(); }, () => { isTextCleared.value = false; getAllCommands();});
 const onEnterKey = () => {
   let action: Function = () => {};
   action = customerGroupCommand.value.getCommandAction();

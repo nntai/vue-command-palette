@@ -18,8 +18,13 @@ export default function keysController(
   const downKey: string = "ArrowDown";
 
   const upKey: string = "ArrowUp";
-
   const enterKey: string = "Enter";
+
+  const altKey: string = "Alt";
+
+  const controlKey: string = "Control";
+
+  const shiftKey: string = "Shift";
 
   function addKey(key: string) {
     if (keys.value.indexOf(key) == -1) {
@@ -43,9 +48,28 @@ export default function keysController(
 
       addKey(e.key);
     } else {
-      if (e.key === upKey || e.key === downKey || e.key === closeKey) {
+      if (
+        e.key === upKey ||
+        e.key === downKey ||
+        e.key === closeKey ||
+        e.key === altKey ||
+        e.key === controlKey ||
+        e.key === shiftKey
+      ) {
         e.preventDefault();
         addKey(e.key);
+      } else {
+        if (keys.value.length !== 0) {
+          if (
+            keys.value[0] === altKey ||
+            keys.value[0] === controlKey ||
+            keys.value[0] === shiftKey
+          ) {
+            e.preventDefault();
+
+            addKey(e.key);
+          }
+        }
       }
     }
   }
@@ -57,25 +81,26 @@ export default function keysController(
   }) {
     if (e.target.tagName !== "INPUT") {
       e.preventDefault();
-      if(e.key===upKey){
+      if (e.key === upKey) {
         isArrowUp.value = false;
       }
-      if(e.key===downKey){
-        isArrowDown.value=false;
+      if (e.key === downKey) {
+        isArrowDown.value = false;
       }
       deleteKey(e.key);
     } else {
-      if (e.key === upKey || e.key === downKey || e.key === closeKey) {
-        e.preventDefault();
-
-        if(e.key===upKey){
+      if (e.key === upKey || e.key === downKey) {
+        if (e.key === upKey) {
           isArrowUp.value = false;
         }
-        if(e.key===downKey){
-          isArrowDown.value=false;
+        if (e.key === downKey) {
+          isArrowDown.value = false;
         }
-        deleteKey(e.key);
       }
+
+      e.preventDefault();
+
+      deleteKey(e.key);
     }
   }
 
@@ -100,7 +125,7 @@ export default function keysController(
 
   function isDownKey() {
     let isIn: boolean = false;
-    
+
     if (isCustomerKey(downKey)) {
       isIn = true;
     }
@@ -152,21 +177,33 @@ export default function keysController(
       }
       let isExecuted: boolean = false;
       for (let i: number = 0; i < customerGroupCommands.length; ++i) {
-        if(isExecuted){
+        if (isExecuted) {
           break;
         } else {
-          for (let j:number = 0; j < customerGroupCommands[i].getCommands().length;j ++){
-            if (isCustomerKey(customerGroupCommands[i].getCommands()[j].command.getCommandKey())) {
+          for (
+            let j: number = 0;
+            j < customerGroupCommands[i].getCommands().length;
+            j++
+          ) {
+            if (
+              isCustomerKey(
+                customerGroupCommands[i]
+                  .getCommands()
+                  [j].command.getCommandKey()
+              )
+            ) {
               let action: Function = () => {};
-    
-              action = customerGroupCommands[i].getCommands()[j].command.getCommandAction();
-    
+
+              action = customerGroupCommands[i]
+                .getCommands()
+                [j].command.getCommandAction();
+
               action();
-    
+
               onModalChange(false);
-    
+
               isIn = true;
-              
+
               isExecuted = true;
 
               break;
@@ -208,6 +245,6 @@ export default function keysController(
     isCustomerKey,
     isCloseKey,
     isArrowDown,
-    isArrowUp
+    isArrowUp,
   };
 }
