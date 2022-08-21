@@ -94,7 +94,6 @@
       for (let i = 0; i < props.commandIndex.commandIndexValue.value;i++){
         totalLength += root2.value[i].clientHeight;
        }
-       console.log(root.value.scrollTop)
        if(totalLength<root.value.scrollTop){
          root.value.scrollTop = totalLength; 
        }    
@@ -154,7 +153,7 @@
 
   .cmp-list-is-active {
     border-radius: 4px;
-    border: #7AE1AA 1px solid;
+    border: var(----primary-color) 1px solid;
     background-color: #7AE1AA;
   }
   .cmp-list-item {

@@ -38,11 +38,11 @@
 <style scoped>
   .is-highlighted {
     font-weight: bold;
-    color: #42b883;
+    color: var(--primary-color);
   }
   .cmp-list-is-active .is-highlighted {
     font-weight: bold;
-    color: #ebebeb;
+    color: var(--text-color-onhover);
     text-decoration: underline;
   }
 </style>

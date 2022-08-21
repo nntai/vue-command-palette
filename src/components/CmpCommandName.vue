@@ -19,7 +19,6 @@ import { computed } from 'vue';
     
   });
   const isHighlighted = (index) => {
-    console.log("test", props.highlightedIndexes);
     for(let i = 0; i < props.highlightedIndexes.length; i++){
         if(index>= props.highlightedIndexes[i][0] && index<props.highlightedIndexes[i][1]){
             return true;

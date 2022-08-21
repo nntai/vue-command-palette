@@ -59,7 +59,6 @@ export default function customerCommandGroupController(
         }
     }
     let fuzzySearchSortedArr: GroupCommand[] = lightweightFuzzy(textInputRemoveSpecialChar.toLowerCase(),groupCommandsLeftover);
-    console.log("leftover",fuzzySearchSortedArr);
     // fuzzySearchSortedArr.findIndex((fuzzyElement: GroupCommand)=>{
     //   return groupCommands.findIndex((element: GroupCommand)=>{
     //     return fuzzyElement.getGroupName() === element.getGroupName();

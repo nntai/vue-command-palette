@@ -25,7 +25,7 @@ line-height: 20px;
 
 /* Blue-gray/500 (Dark-D5) */
 
-color: #BEC1CB;
+color: var(--secondary-color-darkest);
 
 
 /* Inside auto layout */

@@ -16,13 +16,11 @@ export default function resultDisplayController() {
     ) {
         let returnTestedCommand: Command[] = [];
         const regex = new RegExp(searchPhrase);
-        console.log(commandFilteredLists.length);
         for (let i: number = 0; i < commandFilteredLists.length; ++i) {
             const command = new Command("", "", () => { });
             let str: string = commandFilteredLists[i].getCommandName();
             let arr: string[] = str.split(" ");
             let newString = "";
-            console.log(arr);
             for(let j: number = 0; j<arr.length;++j){
                 if(regex.test(arr[j])){
                 newString +='<span style="color:blue">' + arr[j] + "</span> "
@@ -36,9 +34,7 @@ export default function resultDisplayController() {
             command.setCommandKey(commandFilteredLists[i].getCommandKey());
             command.setCommandAction(commandFilteredLists[i].getCommandAction);
             returnTestedCommand.push(command);
-            console.log(returnTestedCommand[i].getCommandName());
         }
-        console.log(returnTestedCommand);
         return returnTestedCommand;
     }
     return { returnTestCommand };
