@@ -74,12 +74,6 @@ export default function customerCommandGroupController(
       textInputRemoveSpecialChar.toLowerCase(),
       groupCommandsLeftover
     );
-    console.log("leftover", fuzzySearchSortedArr);
-    // fuzzySearchSortedArr.findIndex((fuzzyElement: GroupCommand)=>{
-    //   return groupCommands.findIndex((element: GroupCommand)=>{
-    //     return fuzzyElement.getGroupName() === element.getGroupName();
-    //   })!==-1;
-    // })
     for (
       let fuzzyIndex: number = 0;
       fuzzyIndex < fuzzySearchSortedArr.length;

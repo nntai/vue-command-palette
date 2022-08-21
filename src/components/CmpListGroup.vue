@@ -27,7 +27,6 @@ import GroupCommand from "../models/groupCommand";
 import CommandName from "./CommandName.vue";
 import NoResult from "./NoResult.vue";
 import CommandPalette from "../CommandPalette.vue";
-import { onMounted, ref, watch } from "vue";
 
 import scrollController from "../controllers/scrollController";
 

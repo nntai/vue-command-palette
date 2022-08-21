@@ -1,7 +1,5 @@
 import { ref, Ref, watch } from "vue";
-
 import GroupCommand from "../models/groupCommand";
-
 export default function scrollController(
   groupCommandIndex: Ref<{ groupIndex: number; index: number }>,
   isArrowDown: Ref<boolean>,

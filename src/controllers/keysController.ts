@@ -1,5 +1,4 @@
 import { ref, Ref, computed, watch, onMounted } from "vue";
-
 import { isCorrectKey } from "../places/firstPlace";
 import Command from "../models/command";
 import GroupCommand from "../models/groupCommand";
@@ -97,9 +96,7 @@ export default function keysController(
           isArrowDown.value = false;
         }
       }
-
       e.preventDefault();
-
       deleteKey(e.key);
     }
   }
@@ -119,7 +116,6 @@ export default function keysController(
     if (isCustomerKey(closeKey)) {
       isIn = true;
     }
-
     return isIn;
   }
 
@@ -129,7 +125,6 @@ export default function keysController(
     if (isCustomerKey(downKey)) {
       isIn = true;
     }
-
     return isIn;
   }
 
@@ -139,17 +134,14 @@ export default function keysController(
     if (isCustomerKey(upKey)) {
       isIn = true;
     }
-
     return isIn;
   }
 
   function isEnterKey() {
     let isIn: boolean = false;
-
     if (isCustomerKey(enterKey)) {
       isIn = true;
     }
-
     return isIn;
   }
 
@@ -165,12 +157,10 @@ export default function keysController(
   watch(keyCount, (value) => {
     if (value > 0) {
       let isIn: boolean = false;
-
       if (isCustomerKey(modalKey)) {
         onModalChange(true);
         isIn = true;
       }
-
       if (isCloseKey()) {
         onModalChange(false);
         isIn = true;

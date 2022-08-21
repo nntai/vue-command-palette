@@ -7,11 +7,7 @@
 </template>
 
 <script setup lang="ts">
-  
   import { computed } from "vue";
-  
-  
-  
   const props = defineProps({
     commandName: {
       type: String,
@@ -24,17 +20,11 @@
       }
     }
   });
-
   const commandNameArr = computed(() => {
     return props.commandName.split("");
   });
 
-
-
-
 </script>
-
-
 <style scoped>
   .is-highlighted {
     font-weight: bold;

@@ -2,8 +2,6 @@ import Command from "./command";
 export default class GroupCommand {
     private groupName: string = "";
     private commands: { command: Command; highlightArr: boolean[] }[] = [];
-
-  
     public constructor(name:string, commandsList:Command[]) {
       this.groupName = name;
       let list:{ command: Command; highlightArr: boolean[] }[] = [];

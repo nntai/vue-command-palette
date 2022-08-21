@@ -18,27 +18,16 @@
 </template>
 <script setup lang="ts">
 import CmpInput from "./components/CmpInput.vue";
-import CmpList from "./components/CmpList.vue";
 import CmpFooter from "./components/CmpFooter.vue";
 import keysController from "./controllers/keysController";
-
 import customerInputController from "./controllers/customerInputController";
-
-import customerCommandController from "./controllers/customerCommandController";
-
 import modalController from "./controllers/modalController";
-
-import { onMounted, computed, watch, ref } from "vue";
-
+import {computed} from "vue";
 import { vClickOutside } from "./directives/vClickOutside";
-
 import Command from "./models/command";
-
 import GroupCommand from "./models/groupCommand";
-
 import customerCommandGroupController from "./controllers/customerCommandGroupController";
 import CmpListGroup from "./components/CmpListGroup.vue";
-import lightweightFuzzy from "./places/lightweightFuzzy";
 import "./style/style.css"
 const props = defineProps({
   modalKey: {
@@ -72,14 +61,10 @@ const onEnterKey = () => {
   action();
   closeModal();
 };
-const customerCommandName = computed(() => {
-  return customerCommand.value.getCommandName();
-});
 const customerGroupCommandName = computed(() => {
   return customerGroupCommand.value.getCommandName();
 });
 
-lightweightFuzzy("place",props.customerCommandsByGroup);
 
 
 
@@ -94,9 +79,6 @@ const isArrowDown = computed(() => {
 });
 const isArrowUp = computed(() => {
   return {isArrowUpValue: keysInputController.isArrowUp};
-});
-const commandIndex = computed(() => {
-  return {commandIndexValue: customerCommandIndex};
 });
 const groupCommandIndex = computed(() => {
   return {groupCommandIndexValue: customerCommandGroupIndex};

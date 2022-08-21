@@ -3,7 +3,6 @@ export default class Command {
   private commandKey: string = "";
   private commandAction: Function = () => {};
   
-
   public constructor(name: string, key: string, action: Function) {
     this.commandName = name;
     this.commandKey = key;
