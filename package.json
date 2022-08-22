@@ -1,13 +1,29 @@
 {
   "name": "new-command-palette",
-  "version": "1.0.0",
+  "version": "1.0.9",
+  "private": false,
+
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest"
   },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/new-command-palette.umd.js",
+  "module": "./dist/new-command-palette.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/command-palette.es.js",
+      "require": "./dist/command-palette.umd.js"
+    }
+  },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "vue": "^3.2.25",
     "yarn": "^1.22.18"
   },
