@@ -1,26 +1,63 @@
-# Command Palette Component Demo
+# Vue-Command-Palette
 
-This is a demo for Vue's Command Palette component.
+[Demo](Link.com)
 
-## Installation
+> Command Palette Component For Vue3
 
-```bash
-yarn install
-```
+## Demo
 
-## Running on local
+## Installization
 
 ```bash
-yarn dev
+ $ npm install vue-command-palette --save
 ```
 
-Now this demo app will run on your [localhost:3000](http://localhost:3000/)
+## Usage
 
-## Tech stack
+```html
+<script>
+  import CommandPalette from 'vue-command-palette';
+  import 'vue-command-palette/style.css';
+  export default {
+    components: { CommandPalette },
+    data() {
+      return {
 
-- Vue 3
-- Vite
-- TypeScript
-- Jest (adding)
+      };
+    },
+  };
+</script>
 
-**TODO**: Separate this package to 3 packages (lib, demo, document) using mono-repo
+<template>
+  <div>
+    <vue-command-palette></vue-command-palette>
+</template>
+```
+### Props
+
+| Prop                    | Description                                      | Type                                             | Default                 |
+| ----------------------- | ------------------------------------------------ | ------------------------------------------------ | ------------------------|
+| themeMode               | select the theme of the command palette          | `object`                                         |{dark:true, light: false}|
+| modalKey                | command palette open modal keys                  | `string`                                         | "Control+k"             |
+| customerCommandByGroup  | array included all command by group              | `array`                                          | []                      |
+| isDisplayByGroup        | option to display by group or not                | `boolean`                                        | false                   |
+
+### Events
+
+| Name            | Description                                                                            | Callback Arguments                                     |
+| --------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| update:value    | When the value change(v-model:value event)                                             | date                                                   |
+
+### Slots
+| Name          | Description              |
+| ------------- | ------------------------ |
+| cmd-name      | custom the command name  |
+| cmd-key       | custom the command keys  |
+
+## ChangeLog
+
+[CHANGELOG](CHANGELOG.md)
+
+## License
+
+Copyright (c) 2022-present name
