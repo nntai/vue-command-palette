@@ -37,12 +37,8 @@ export default function keysController(
     }
   }
 
-  function onKeyDownInput(e: {
-    target: { tagName: string };
-    preventDefault: Function;
-    key: string;
-  }) {
-    if (e.target.tagName !== "INPUT") {
+  function onKeyDownInput(this: Window, e: KeyboardEvent) {
+    if ((<HTMLInputElement>e.target)?.tagName !== "INPUT") {
       e.preventDefault();
 
       addKey(e.key);
@@ -73,12 +69,8 @@ export default function keysController(
     }
   }
 
-  function onKeyUpInput(e: {
-    target: { tagName: string };
-    preventDefault: Function;
-    key: string;
-  }) {
-    if (e.target.tagName !== "INPUT") {
+  function onKeyUpInput(this: Window, e: KeyboardEvent) {
+    if ((<HTMLInputElement>e.target)?.tagName !== "INPUT") {
       e.preventDefault();
       if (e.key === upKey) {
         isArrowUp.value = false;

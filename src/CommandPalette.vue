@@ -22,7 +22,7 @@ import CmpFooter from "./components/CmpFooter.vue";
 import keysController from "./controllers/keysController";
 import customerInputController from "./controllers/customerInputController";
 import modalController from "./controllers/modalController";
-import {computed} from "vue";
+import {computed, PropType} from "vue";
 import { vClickOutside } from "./directives/vClickOutside";
 import Command from "./models/command";
 import GroupCommand from "./models/groupCommand";
@@ -35,8 +35,8 @@ const props = defineProps({
     default: "Control+k",
   },
   customerCommandsByGroup: {
-    type: Array,
-    default: function(placeProps) {
+    type: Array as PropType<GroupCommand[]>,
+    default: function() {
       return [];
     }
   },
