@@ -6,17 +6,20 @@
     <div v-else v-for="(customerGroupCommand, index) in props.customerGroupCommands" :key="index" ref="groupRef">
       <div v-if="isDisplayByGroup" ref="groupNameRef" class="group-name">{{ customerGroupCommand.getGroupName() }}</div>
       <div v-for="(customerCommand, cmpIndex) in customerGroupCommand.getCommands()" :key="cmpIndex" ref="commandRef">
+        <slot :commandKey="customerCommand.command.getCommandKey()" :commandName="customerCommand.command.getCommandName()" name="cmd-item">
         <div :class="{ 'cmp-list-is-active': isCommandActive(customerCommand.command.getCommandName()), 'cmp-list-item': true, }" @mouseover="() => { props.onGroupCommandHovered(index, cmpIndex); }" @click="() => { customerCommand.command.getCommandAction()(); props.closeModal(); }">
-          <slot :commandName="customerCommand.command.getCommandName()" name="cmd-name">
+          
             <command-name :commandName="customerCommand.command.getCommandName()"
               :highlightArr="customerCommand.highlightArr" class="cmp-list-command cmp-list-left" />
-          </slot>
-          <slot :commandKey="customerCommand.command.getCommandKey()" name="cmd-key">
+      
+          
             <div class="cmp-list-command cmp-list-right">
               <div class="key">{{ customerCommand.command.getCommandKey() }}</div>
             </div>
-          </slot>
+          
         </div>
+        </slot>
+        
       </div>
     </div>
   </div>

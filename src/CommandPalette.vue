@@ -4,11 +4,9 @@
       <form @submit.prevent="onEnterKey">
         <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"/>
         <cmp-list-group class="cmp-list" :customerGroupCommands="customerGroupCommands" :customerGroupCommandName="customerGroupCommandName" :onGroupCommandHovered="updateCustomerGroupCommand" :closeModal="closeModal" :isArrowDown="isArrowDown" :isArrowUp="isArrowUp" :groupCommandIndex="groupCommandIndex" :isDisplayByGroup="isDisplayByGroup" >
-          <template v-slot:cmd-name="{commandName}">
-            <slot name="cmd-name" :commandName="commandName" />
-          </template>
-          <template v-slot:cmd-key="{commandKey}">
-            <slot name="cmd-key" :commandKey="commandKey" />
+          <template v-slot:cmd-item="{commandName,commandKey}">
+            <slot name="cmd-item" :commandName="commandName" :commandKey="commandKey" />
+          
           </template>
         </cmp-list-group>
         <cmp-footer class="cmp-footer" />
