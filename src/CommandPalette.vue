@@ -28,6 +28,12 @@ import customerCommandGroupController from "./controllers/customerCommandGroupCo
 import CmpListGroup from "./components/CmpListGroup.vue";
 import "./style/style.css"
 const props = defineProps({
+  customerGroups: {
+    type: Array as PropType<{groupName: string, commands:{commandName: string, commandKey: string, commandAction: Function}[]}[]>,
+    default: function() {
+      return [];
+    }
+  },
   modalKey: {
     type: String,
     default: "Control+k",
@@ -51,7 +57,7 @@ const props = defineProps({
   }
 });
 const { customerInput, clearText, isTextCleared } = customerInputController();
-const { customerGroupCommands, customerGroupCommand, customerCommandGroupIndex, updateCustomerGroupCommand, previousCustomerGroupCommand, nextCustomerGroupCommand, commandGroupRefresh, getAllCommands } = customerCommandGroupController(customerInput, props.customerCommandsByGroup, isTextCleared);
+const { customerGroupsBase,customerGroupCommands, customerGroupCommand, customerCommandGroupIndex, updateCustomerGroupCommand, previousCustomerGroupCommand, nextCustomerGroupCommand, commandGroupRefresh, getAllCommands } = customerCommandGroupController(customerInput, isTextCleared, props.customerGroups);
 const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandGroupRefresh(); }, () => { isTextCleared.value = false; getAllCommands();});
 const onEnterKey = () => {
   let action: Function = () => {};
@@ -63,11 +69,11 @@ const customerGroupCommandName = computed(() => {
   return customerGroupCommand.value.getCommandName();
 });
 
-
+console.log(props.customerGroups);
 
 
 const updateText = (value: string) => {customerInput.value = value;};
-const keysInputController = keysController(onModalChange, props.modalKey, props.customerCommandsByGroup, previousCustomerGroupCommand, nextCustomerGroupCommand, onEnterKey);
+const keysInputController = keysController(onModalChange, props.modalKey, customerGroupsBase, previousCustomerGroupCommand, nextCustomerGroupCommand, onEnterKey);
 
 const isModalOpened = computed(() => {
   return {isModalValue: isModal};

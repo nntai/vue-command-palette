@@ -5,7 +5,7 @@ import GroupCommand from "../models/groupCommand";
 export default function keysController(
   onModalChange: Function,
   modalKey: string,
-  customerGroupCommands: GroupCommand[],
+  customerGroupCommands: Ref<GroupCommand[]>,
   previousCustomerGroupCommand: Function,
   nextCustomerGroupCommand: Function,
   onEnterKey: Function
@@ -158,25 +158,25 @@ export default function keysController(
         isIn = true;
       }
       let isExecuted: boolean = false;
-      for (let i: number = 0; i < customerGroupCommands.length; ++i) {
+      for (let i: number = 0; i < customerGroupCommands.value.length; ++i) {
         if (isExecuted) {
           break;
         } else {
           for (
             let j: number = 0;
-            j < customerGroupCommands[i].getCommands().length;
+            j < customerGroupCommands.value[i].getCommands().length;
             j++
           ) {
             if (
               isCustomerKey(
-                customerGroupCommands[i]
+                customerGroupCommands.value[i]
                   .getCommands()
                   [j].command.getCommandKey()
               )
             ) {
               let action: Function = () => {};
 
-              action = customerGroupCommands[i]
+              action = customerGroupCommands.value[i]
                 .getCommands()
                 [j].command.getCommandAction();
 

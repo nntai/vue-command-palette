@@ -1,5 +1,5 @@
 <template>
-    <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands" :themeMode="themeMode"
+    <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands" :themeMode="themeMode" :customerGroups="customerGroups"
     :isDisplayByGroup="isDisplayByGroup" />
 
 </template>
@@ -21,6 +21,85 @@ const changeTheme=()=>{
   themeMode.value.dark=!themeMode.value.dark;
   themeMode.value.light=!themeMode.value.light;
 };
+const customerGroups = computed(() => {
+  return [
+    {groupName:"Asia",
+    commands:[
+      {
+        commandName:"Armenia", 
+        commandKey:"B", 
+        commandAction:() => {alert("2");}},
+      {
+        commandName:"Brunei", 
+        commandKey:"Control+Shift+B", 
+        commandAction:() => {alert("3");}},
+      {
+        commandName:"China", 
+        commandKey:"u+i", 
+        commandAction:() => {alert("4");}},
+      {
+        commandName:"Hong Kong", 
+        commandKey:"m + c", 
+        commandAction:() => {alert("5");}}
+        ]},
+    {groupName:"Europe",
+    commands:[
+      {commandName:"Austria", 
+      commandKey:"B", 
+      commandAction:() => {alert("10");}},
+      {commandName:"Czech Republic", 
+      commandKey:"m+i", 
+      commandAction:() => {alert("10");}},
+      {commandName:"Bangladesh", 
+      commandKey:"m+h", 
+      commandAction:() => {alert("10");}},
+      {commandName:"Denmark", 
+      commandKey:"b + c", 
+      commandAction:() => {alert("10");}}
+      ]},
+    {groupName:"South America",
+    commands:[
+      {commandName:"Argentina", 
+    commandKey:"z+h", 
+    commandAction:() => {alert("1");}},
+    {commandName:"Brazil", 
+    commandKey:"z+k", 
+    commandAction:() => {alert("1");}},
+    {commandName:"Colombia", 
+    commandKey:"z+l", 
+    commandAction:() => {alert("1");}},
+    {commandName:"Ecuador", 
+    commandKey:"z+q", 
+    commandAction:() => {alert("1");}}
+    ]},
+    {groupName:"Africa",
+    commands:[
+      {commandName:"Cameroon", 
+      commandKey:"o+e", 
+      commandAction:() => {alert("1");}},
+      {commandName:"Nigeria", 
+      commandKey:"p+e", 
+      commandAction:() => {alert("1");}},
+      {commandName:"Egypt", 
+      commandKey:"t+e", 
+      commandAction:() => {alert("1");}},
+      {commandName:"Algeria", 
+      commandKey:"k+e", 
+      commandAction:() => {alert("1");}}
+      ]},
+    {groupName:"Change theme",
+    commands:[
+      {commandName:"Switch theme", 
+      commandKey:"Control+m", 
+      commandAction:() => {changeTheme();}},
+      {commandName:"Test", 
+      commandKey:"p+e", 
+      commandAction:() => {}},
+      ]},
+
+  ];
+});
+
 const customerGroupCommands = computed(() => {
   return [
     new GroupCommand("Asia", [

@@ -1,4 +1,4 @@
-import { ref, watch, Ref } from "vue";
+import { ref, watch, Ref, onMounted } from "vue";
 import Command from "../models/command";
 import { getHighlights } from "../places/highlightText";
 import GroupCommand from "../models/groupCommand";
@@ -6,9 +6,11 @@ import customerInputController from "./customerInputController";
 import lightweightFuzzy from "../places/lightweightFuzzy";
 export default function customerCommandGroupController(
   textInput: Ref<string>,
-  commandsInput: GroupCommand[],
-  isTextCleared: Ref<boolean>
+  isTextCleared: Ref<boolean>,
+  commandGroupsInput: {groupName: string, commands: {commandName: string, commandKey: string, commandAction: Function}[]}[]
 ) {
+  const customerGroupsBase: Ref<GroupCommand[]> = ref([]);
+
   const customerGroupCommands: Ref<GroupCommand[]> = ref([]);
 
   const customerGroupCommand: Ref<Command> = ref(new Command("", "", () => {}));
@@ -158,7 +160,7 @@ export default function customerCommandGroupController(
   }
 
   function getAllCommands() {
-    getCustomerGroupCommands("", commandsInput);
+    getCustomerGroupCommands("", customerGroupsBase.value);
 
     if (customerGroupCommands.value.length != 0) {
       updateCustomerGroupCommand(0, 0);
@@ -167,7 +169,7 @@ export default function customerCommandGroupController(
 
   watch(textInput, (value) => {
     if (!isTextCleared.value) {
-      getCustomerGroupCommands(value, commandsInput);
+      getCustomerGroupCommands(value, customerGroupsBase.value);
       if (customerGroupCommands.value.length != 0) {
         updateCustomerGroupCommand(0, 0);
       } else {
@@ -175,6 +177,25 @@ export default function customerCommandGroupController(
       }
     }
   });
+
+  onMounted(() => {
+    
+    let commandGroups: GroupCommand[] = [];
+    for (let i: number = 0; i < commandGroupsInput.length; i++) {
+      let commandGroup: GroupCommand;
+      let commands: Command[] = [];
+      for (let j: number = 0; j < commandGroupsInput[i].commands.length; j++) {
+        let commandItem: Command;
+        commandItem = new Command(commandGroupsInput[i].commands[j].commandName,commandGroupsInput[i].commands[j].commandKey,commandGroupsInput[i].commands[j].commandAction);
+        commands.push(commandItem);
+      }
+      commandGroup = new GroupCommand(commandGroupsInput[i].groupName,commands);
+      commandGroups.push(commandGroup);
+    }
+    customerGroupsBase.value = commandGroups;
+  }
+
+  );
 
   return {
     customerGroupCommands,
@@ -186,5 +207,6 @@ export default function customerCommandGroupController(
     commandGroupRefresh,
     customerCommandGroupIndex,
     getAllCommands,
+    customerGroupsBase
   };
 }
