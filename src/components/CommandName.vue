@@ -7,15 +7,15 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from "vue";
+  import { computed, PropType } from "vue";
   const props = defineProps({
     commandName: {
       type: String,
       default: ""
     },
     highlightArr: {
-      type: Array,
-      default: function(placeProps) {
+      type: Array as PropType<Boolean[]>,
+      default: function() {
         return [];
       }
     }

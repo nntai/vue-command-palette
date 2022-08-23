@@ -1,6 +1,6 @@
 <template>
     <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands" :themeMode="themeMode"
-    :isDisplayByGroup="!isDisplayByGroup" />
+    :isDisplayByGroup="isDisplayByGroup" />
 
 </template>
 

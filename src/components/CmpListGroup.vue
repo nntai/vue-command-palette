@@ -29,6 +29,7 @@ import NoResult from "./NoResult.vue";
 import CommandPalette from "../CommandPalette.vue";
 
 import scrollController from "../controllers/scrollController";
+import { PropType } from "vue";
 
 const props = defineProps({
   closeModal: {
@@ -51,8 +52,8 @@ const props = defineProps({
   },
   /*GROUP COMMENT DECLARATION DO NOT TOUCH - HAO*/
   customerGroupCommands: {
-    type: Array,
-    default: function (placeProps) {
+    type: Array as PropType<GroupCommand[]>,
+    default: function () {
       return [];
     },
   },

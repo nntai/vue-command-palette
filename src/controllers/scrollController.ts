@@ -6,9 +6,9 @@ export default function scrollController(
   isArrowUp: Ref<boolean>
 ) {
   const root: Ref<HTMLElement | null> = ref(null);
-  const groupRef: Ref<HTMLElement | null> = ref(null);
-  const groupNameRef: Ref<HTMLElement | null> = ref(null);
-  const commandRef: Ref<HTMLElement | null> = ref(null);
+  const groupRef: Ref<HTMLElement[] | null> = ref(null);
+  const groupNameRef: Ref<HTMLElement[] | null> = ref(null);
+  const commandRef: Ref<HTMLElement[] | null> = ref(null);
 
   watch(groupCommandIndex, (value) => {
     if (isArrowDown.value) {
@@ -23,10 +23,10 @@ export default function scrollController(
             totalLength += groupNameRef.value[value.groupIndex].clientHeight;
           }
           for (let i: number = 0; i < value.index + 1; i++) {
-            totalLength += commandRef.value[i].clientHeight + 10;
+            totalLength += commandRef.value![i].clientHeight + 10;
           }
-          if (totalLength > root.value.scrollTop + root.value.clientHeight) {
-            root.value.scrollTop = totalLength - root.value.clientHeight;
+          if (totalLength > root.value!.scrollTop + root.value!.clientHeight) {
+            root.value!.scrollTop = totalLength - root.value!.clientHeight;
           }
         }
       }
@@ -43,10 +43,10 @@ export default function scrollController(
             totalLength += groupNameRef.value[value.groupIndex].clientHeight;
           }
           for (let i: number = 0; i < value.index; i++) {
-            totalLength += commandRef.value[i].clientHeight + 10;
+            totalLength += commandRef.value![i].clientHeight + 10;
           }
-          if (totalLength < root.value.scrollTop) {
-            root.value.scrollTop = totalLength;
+          if (totalLength < root.value!.scrollTop) {
+            root.value!.scrollTop = totalLength;
           }
         }
       }
