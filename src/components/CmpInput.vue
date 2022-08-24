@@ -6,14 +6,10 @@
     <input
       type="text"
       :value="customerText"
-      @input="
-        (event) => {
-          onInputChanged((event.target as HTMLInputElement)!.value);
-        }
-      "
       class="input-place"
       ref="cmpInput"
       placeholder="Select a command ..."
+      @input="onInput"
     />
   </div>
 </template>
@@ -34,9 +30,13 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(["updateText"]);
+const emits = defineEmits(["update-text"]);
 const onInputChanged = (value: string) => {
-  emits("updateText", value);
+  emits("update-text", value);
+};
+
+const onInput = (event: Event) => {
+  onInputChanged((event.target as HTMLInputElement)!.value);
 };
 
 const cmpInput = ref();

@@ -27,7 +27,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "path": "^0.12.7",
-    "vue": "^3.2.25",
     "yarn": "^1.22.18"
   },
   "devDependencies": {
@@ -47,5 +46,8 @@
     "vite": "^2.9.9",
     "vitest": "^0.15.2",
     "vue-tsc": "^0.34.7"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.19"
   }
 }

@@ -1,17 +1,22 @@
 <template>
   <div>
     <div>
-        <div class="no-research"><font-awesome-icon class="icon" :icon="['fas', 'circle-exclamation']" /> &nbsp; No result matched your search</div>
+      <div class="no-research">
+        <font-awesome-icon
+          class="icon"
+          :icon="['fas', 'circle-exclamation']"
+        /> &nbsp; No result matched your search
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-  import FontAwesomeIcon from "../icons/fontAwesomeIcon";
-  import { defineComponent } from "vue";
+import FontAwesomeIcon from '../icons/fontAwesomeIcon';
+import { defineComponent } from 'vue';
 
-  defineComponent({
-    FontAwesomeIcon
-  });
+defineComponent({
+  FontAwesomeIcon,
+});
 </script>
 <style scoped>
 .no-research .icon {
@@ -28,5 +33,5 @@ line-height: 16px;
 height: 50px;
 color: var(--secondary-color-darker);
 }
-  
+
 </style>

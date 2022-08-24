@@ -1,12 +1,37 @@
 <template>
-  <div v-show="isModal" class='command-palette-place' :class="props.themeMode">
-    <div class="command-palette-wrapper" v-click-outside="closeModal">
+  <div
+    v-show="isModal"
+    class="command-palette-place"
+    :class="props.themeMode"
+  >
+    <div
+      v-click-outside="closeModal"
+      class="command-palette-wrapper"
+    >
       <form @submit.prevent="onEnterKey">
-        <cmp-input class="cmp-input" :customerText="customerInput" @update-text="updateText" :isModal="isModalOpened"/>
-        <cmp-list-group class="cmp-list" :customerGroupCommands="customerGroupCommands" :customerGroupCommandName="customerGroupCommandName" :onGroupCommandHovered="updateCustomerGroupCommand" :closeModal="closeModal" :isArrowDown="isArrowDown" :isArrowUp="isArrowUp" :groupCommandIndex="groupCommandIndex" :isDisplayByGroup="isDisplayByGroup" >
-          <template v-slot:cmd-item="{commandName,commandKey}">
-            <slot name="cmd-item" :commandName="commandName" :commandKey="commandKey" />
-          
+        <cmp-input
+          class="cmp-input"
+          :customer-text="customerInput"
+          :is-modal="isModalOpened"
+          @update-text="updateText"
+        />
+        <cmp-list-group
+          class="cmp-list"
+          :customer-group-commands="customerGroupsBase"
+          :customer-group-command-name="customerGroupCommandName"
+          :on-group-command-hovered="updateCustomerGroupCommand"
+          :close-modal="closeModal"
+          :is-arrow-down="isArrowDown"
+          :is-arrow-up="isArrowUp"
+          :group-command-index="groupCommandIndex"
+          :is-display-by-group="isDisplayByGroup"
+        >
+          <template #cmd-item="{commandName,commandKey}">
+            <slot
+              name="cmd-item"
+              :command-name="commandName"
+              :command-key="commandKey"
+            />
           </template>
         </cmp-list-group>
         <cmp-footer class="cmp-footer" />
@@ -15,28 +40,35 @@
   </div>
 </template>
 <script setup lang="ts">
-import CmpInput from "./components/CmpInput.vue";
-import CmpFooter from "./components/CmpFooter.vue";
-import keysController from "./controllers/keysController";
-import customerInputController from "./controllers/customerInputController";
-import modalController from "./controllers/modalController";
-import {computed, PropType} from "vue";
-import { vClickOutside } from "./directives/vClickOutside";
-import Command from "./models/command";
-import GroupCommand from "./models/groupCommand";
-import customerCommandGroupController from "./controllers/customerCommandGroupController";
-import CmpListGroup from "./components/CmpListGroup.vue";
-import "./index.css";
+import CmpInput from './components/CmpInput.vue';
+import keysController from './controllers/keysController';
+import customerInputController from './controllers/customerInputController';
+import modalController from './controllers/modalController';
+import { computed, PropType } from 'vue';
+import { vClickOutside } from './directives/vClickOutside';
+import customerCommandGroupController from './controllers/customerCommandGroupController';
+import CmpFooter from './components/CmpFooter.vue';
+import CmpListGroup from './components/CmpListGroup.vue';
+import './index.css';
+
+type CommandProp = {
+  commandName: string, commandKey: string, commandAction: () => void,
+}
+type GroupCommandProp = {
+  groupName: string,
+  commands: CommandProp[]
+}
+
 const props = defineProps({
   customerGroups: {
-    type: Array as PropType<{groupName: string, commands:{commandName: string, commandKey: string, commandAction: Function}[]}[]>,
-    default: function() {
+    type: Array as PropType<GroupCommandProp[]>,
+    default () {
       return [];
-    }
+    },
   },
   modalKey: {
     type: String,
-    default: "Control+k",
+    default: 'Control+k',
   },
   // customerCommandsByGroup: {
   //   type: Array as PropType<GroupCommand[]>,
@@ -44,24 +76,45 @@ const props = defineProps({
   //     return [];
   //   }
   // },
-  isDisplayByGroup:{
+  isDisplayByGroup: {
     type: Boolean,
-    default: false
+    default: false,
   },
-  themeMode:{
+  themeMode: {
     type: Object,
-    default:{
+    default: () => ({
       dark: true,
-      light: false
-    }
-  }
+      light: false,
+    }),
+  },
 });
+
 const { customerInput, clearText, isTextCleared } = customerInputController();
-const { customerGroupsBase,customerGroupCommands, customerGroupCommand, customerCommandGroupIndex, updateCustomerGroupCommand, previousCustomerGroupCommand, nextCustomerGroupCommand, commandGroupRefresh, getAllCommands } = customerCommandGroupController(customerInput, isTextCleared, props.customerGroups);
-const { isModal, onModalChange, closeModal } = modalController(() => {  clearText(); commandGroupRefresh(); }, () => { isTextCleared.value = false; getAllCommands();});
+const {
+  customerGroupsBase,
+  customerGroupCommands,
+  customerGroupCommand,
+  customerCommandGroupIndex,
+  updateCustomerGroupCommand,
+  previousCustomerGroupCommand,
+  nextCustomerGroupCommand,
+  commandGroupRefresh,
+  getAllCommands,
+} = customerCommandGroupController(customerInput, isTextCleared, props.customerGroups);
+
+const onModalClosed = () => {
+  clearText();
+  commandGroupRefresh();
+};
+
+const onModalOpened = () => {
+  isTextCleared.value = false;
+  getAllCommands();
+};
+const { isModal, onModalChange, closeModal } = modalController(onModalClosed, onModalOpened);
+
 const onEnterKey = () => {
-  let action: Function = () => {};
-  action = customerGroupCommand.value.getCommandAction();
+  const action = customerGroupCommand.value.getCommandAction();
   action();
   closeModal();
 };
@@ -69,29 +122,32 @@ const customerGroupCommandName = computed(() => {
   return customerGroupCommand.value.getCommandName();
 });
 
-console.log(props.customerGroups);
-
-
-const updateText = (value: string) => {customerInput.value = value;};
-const keysInputController = keysController(onModalChange, props.modalKey, customerGroupsBase, previousCustomerGroupCommand, nextCustomerGroupCommand, onEnterKey);
+const updateText = (value: string) => { customerInput.value = value; };
+const keysInputController = keysController(
+  onModalChange,
+  props.modalKey,
+  customerGroupsBase,
+  previousCustomerGroupCommand,
+  nextCustomerGroupCommand,
+  onEnterKey,
+);
 
 const isModalOpened = computed(() => {
-  return {isModalValue: isModal};
+  return { isModalValue: isModal };
 });
 const isArrowDown = computed(() => {
-  return {isArrowDownValue: keysInputController.isArrowDown};
+  return { isArrowDownValue: keysInputController.isArrowDown };
 });
 const isArrowUp = computed(() => {
-  return {isArrowUpValue: keysInputController.isArrowUp};
+  return { isArrowUpValue: keysInputController.isArrowUp };
 });
 const groupCommandIndex = computed(() => {
-  return {groupCommandIndexValue: customerCommandGroupIndex};
+  return { groupCommandIndexValue: customerCommandGroupIndex };
 });
 
 </script>
 
 <style scoped>
-
 .command-palette-wrapper {
   display: flex;
   flex-direction: column;
