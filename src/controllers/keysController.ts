@@ -1,5 +1,5 @@
 import { ref, Ref, computed, watch, onMounted } from "vue";
-import { isCorrectKey } from "../places/firstPlace";
+import { isCorrectKey } from "../methods/keyCorrection";
 import Command from "../models/command";
 import GroupCommand from "../models/groupCommand";
 export default function keysController(

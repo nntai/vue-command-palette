@@ -1,9 +1,9 @@
 import { ref, watch, Ref, onMounted } from "vue";
 import Command from "../models/command";
-import { getHighlights } from "../places/highlightText";
+import { getHighlights } from "../methods/highlightText";
 import GroupCommand from "../models/groupCommand";
 import customerInputController from "./customerInputController";
-import lightweightFuzzy from "../places/lightweightFuzzy";
+import lightweightFuzzy from "../methods/lightweightFuzzy";
 export default function customerCommandGroupController(
   textInput: Ref<string>,
   isTextCleared: Ref<boolean>,

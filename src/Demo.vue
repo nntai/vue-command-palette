@@ -1,7 +1,5 @@
 <template>
-    <command-palette class="command-palette" :customerCommandsByGroup="customerGroupCommands" :themeMode="themeMode" :customerGroups="customerGroups"
-    :isDisplayByGroup="isDisplayByGroup" />
-
+    <command-palette class="command-palette" :themeMode="themeMode" :customerGroups="customerGroups" :isDisplayByGroup="isDisplayByGroup" />
 </template>
 
 <script setup lang="ts">
@@ -9,6 +7,7 @@ import CommandPalette from "./CommandPalette.vue";
 import Command from "./models/command";
 import { computed, ref } from "vue";
 import GroupCommand from "./models/groupCommand";
+import "./index.css"
 
 const isDisplayByGroup = computed(() => {
   return true;
@@ -135,29 +134,4 @@ const customerGroupCommands = computed(() => {
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0px;
-}
-
-#app {
-
-  display: flex;
-  flex: 1;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  padding: 8px;
-  background-color: #839742
-}
-
-.command-palette {
-
-  padding: 15% 0% 0% 30%;
-
-  background: rgba(0, 0, 0, 0.5)
-}
 </style>

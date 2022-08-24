@@ -30,7 +30,6 @@ import GroupCommand from "../models/groupCommand";
 import CommandName from "./CommandName.vue";
 import NoResult from "./NoResult.vue";
 import CommandPalette from "../CommandPalette.vue";
-
 import scrollController from "../controllers/scrollController";
 import { PropType } from "vue";
 

@@ -26,7 +26,7 @@ import Command from "./models/command";
 import GroupCommand from "./models/groupCommand";
 import customerCommandGroupController from "./controllers/customerCommandGroupController";
 import CmpListGroup from "./components/CmpListGroup.vue";
-import "./style/style.css"
+import "./index.css";
 const props = defineProps({
   customerGroups: {
     type: Array as PropType<{groupName: string, commands:{commandName: string, commandKey: string, commandAction: Function}[]}[]>,
@@ -38,12 +38,12 @@ const props = defineProps({
     type: String,
     default: "Control+k",
   },
-  customerCommandsByGroup: {
-    type: Array as PropType<GroupCommand[]>,
-    default: function() {
-      return [];
-    }
-  },
+  // customerCommandsByGroup: {
+  //   type: Array as PropType<GroupCommand[]>,
+  //   default: function() {
+  //     return [];
+  //   }
+  // },
   isDisplayByGroup:{
     type: Boolean,
     default: false
@@ -91,6 +91,7 @@ const groupCommandIndex = computed(() => {
 </script>
 
 <style scoped>
+
 .command-palette-wrapper {
   display: flex;
   flex-direction: column;
@@ -106,6 +107,8 @@ const groupCommandIndex = computed(() => {
   right: 0;
   bottom: 0;
   padding-top: 3%;
+  padding: 5% 0% 0% 30%;
+  background: rgba(0, 0, 0, 0.5)
 }
 .cmp-input,
 .cmp-list {

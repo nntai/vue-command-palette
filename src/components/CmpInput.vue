@@ -8,7 +8,7 @@
       :value="customerText"
       @input="
         (event) => {
-          onInputChanged(event.target.value);
+          onInputChanged((event.target as HTMLInputElement)!.value);
         }
       "
       class="input-place"
@@ -71,7 +71,7 @@ defineComponent({
   outline: none;
   border: none;
 }
-input {
+.input {
   color: var(--secondary-color);
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue",

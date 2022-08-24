@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-        <div class="no-research"><font-awesome-icon class="icon" :icon="['fas', 'circle-exclamation']" /> &nbsp; No Research</div>
+        <div class="no-research"><font-awesome-icon class="icon" :icon="['fas', 'circle-exclamation']" /> &nbsp; No result matched your search</div>
     </div>
   </div>
 </template>
