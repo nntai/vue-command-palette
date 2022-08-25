@@ -9,7 +9,7 @@ import lightweightFuzzy from '../methods/lightweightFuzzy';
 export default function customerCommandGroupController (
   textInput: Ref<string>,
   isTextCleared: Ref<boolean>,
-  commandGroupsInput: {groupName: string, commands: {commandName: string, commandKey: string, commandAction: (Function)}[]}[],
+  commandGroupsInput: {groupName: string, commands: {commandName: string, commandKey: string, commandAction: () => any }[]}[],
 ) {
   const customerGroupsBase = computed(() => {
     const commandGroups: GroupCommand[] = [];

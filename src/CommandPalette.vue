@@ -17,7 +17,7 @@
         />
         <cmp-list-group
           class="cmp-list"
-          :customer-group-commands="customerGroupsBase"
+          :customer-group-commands="customerGroupCommands"
           :customer-group-command-name="customerGroupCommandName"
           :on-group-command-hovered="updateCustomerGroupCommand"
           :close-modal="closeModal"
