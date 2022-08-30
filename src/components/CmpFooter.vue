@@ -17,22 +17,13 @@
 <style scoped>
 .footer { 
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-font-weight: 400;
-font-size: 13px;
-line-height: 20px;
-/* identical to box height, or 133% */
-
-
-/* Blue-gray/500 (Dark-D5) */
-
-color: #BEC1CB;
-
-
-/* Inside auto layout */
-
-flex: none;
-order: 1;
-flex-grow: 0;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--secondary-color-darkest);
+  flex: none;
+  order: 1;
+  flex-grow: 0;
 }
 .enter{
   transform: rotate(90deg);

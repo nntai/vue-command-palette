@@ -1,10 +1,24 @@
 {
-  "name": "command-palette",
-  "private": true,
-  "version": "0.0.0",
+  "name": "command-palette-vue3",
+  "private": false,
+  "version": "0.2.3",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/command-palette-vue3.umd.js",
+  "module": "./dist/command-palette-vue3.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/command-palette-vue3.es.js",
+      "require": "./dist/command-palette-vue3.umd.js"
+    },
+    "./dist/style.css":"./dist/style.css"
+  },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build && vue-tsc --emitDeclarationOnly",
     "preview": "vite preview",
     "test": "vitest"
   },
@@ -12,11 +26,12 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
-    "vue": "^3.2.25",
+    "path": "^0.12.7",
     "yarn": "^1.22.18"
   },
   "devDependencies": {
     "@testing-library/vue": "^6.6.0",
+    "@types/node": "^18.7.11",
     "@typescript-eslint/eslint-plugin": "^5.24.0",
     "@typescript-eslint/parser": "^5.24.0",
     "@vitejs/plugin-vue": "^2.3.3",
@@ -31,5 +46,8 @@
     "vite": "^2.9.9",
     "vitest": "^0.15.2",
     "vue-tsc": "^0.34.7"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.19"
   }
 }

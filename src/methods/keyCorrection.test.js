@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { isCorrectKey } from "./firstPlace.ts";
+import { isCorrectKey } from "./keyCorrection.ts";
 
 describe(
   "is correct key", () => {

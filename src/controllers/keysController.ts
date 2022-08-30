@@ -1,86 +1,101 @@
-import { ref, Ref, computed, watch, onMounted } from "vue";
+import {
+  ref, Ref, computed, watch, onMounted,
+} from 'vue';
+import { isCorrectKey } from '../methods/keyCorrection';
+import GroupCommand from '../models/groupCommand';
 
-import { isCorrectKey } from "../places/firstPlace";
-import Command from "../models/command";
-import GroupCommand from "../models/groupCommand";
-export default function keysController(
-  onModalChange: Function,
+const keysController = (
+  onModalChange: (isModalOpen: boolean) => void,
   modalKey: string,
-  customerGroupCommands: GroupCommand[],
-  previousCustomerGroupCommand: Function,
-  nextCustomerGroupCommand: Function,
-  onEnterKey: Function
-) {
+  customerGroupCommands: Ref<GroupCommand[]>,
+  previousCustomerGroupCommand: () => void,
+  nextCustomerGroupCommand: () => void,
+  onEnterKey: () => void,
+) => {
   const keys: Ref<string[]> = ref([]);
   const isArrowUp: Ref<boolean> = ref(false);
   const isArrowDown: Ref<boolean> = ref(false);
-  const closeKey: string = "Escape";
-  const downKey: string = "ArrowDown";
 
-  const upKey: string = "ArrowUp";
+  const closeKey = 'Escape';
+  const downKey = 'ArrowDown';
 
-  const enterKey: string = "Enter";
+  const upKey = 'ArrowUp';
+  const enterKey = 'Enter';
 
-  function addKey(key: string) {
-    if (keys.value.indexOf(key) == -1) {
+  const altKey = 'Alt';
+
+  const controlKey = 'Control';
+
+  const shiftKey = 'Shift';
+
+  function addKey (key: string) {
+    if (keys.value.indexOf(key) === -1) {
       keys.value.push(key);
     }
   }
 
-  function deleteKey(key: string) {
-    if (keys.value.indexOf(key) != -1) {
+  function deleteKey (key: string) {
+    if (keys.value.indexOf(key) !== -1) {
       keys.value.splice(keys.value.indexOf(key), 1);
     }
   }
 
-  function onKeyDownInput(e: {
-    target: { tagName: string };
-    preventDefault: Function;
-    key: string;
-  }) {
-    if (e.target.tagName !== "INPUT") {
-      e.preventDefault();
+  function onKeyDownInput (this: Window, e: KeyboardEvent) {
+    const target = e.target as HTMLInputElement;
 
+    if (target?.tagName !== 'INPUT') {
+      e.preventDefault();
       addKey(e.key);
-    } else {
-      if (e.key === upKey || e.key === downKey || e.key === closeKey) {
+    } else if (
+      e.key === upKey
+        || e.key === downKey
+        || e.key === closeKey
+        || e.key === altKey
+        || e.key === controlKey
+        || e.key === shiftKey
+    ) {
+      e.preventDefault();
+      addKey(e.key);
+    } else if (keys.value.length !== 0) {
+      if (
+        keys.value[0] === altKey
+            || keys.value[0] === controlKey
+            || keys.value[0] === shiftKey
+      ) {
         e.preventDefault();
         addKey(e.key);
       }
     }
   }
 
-  function onKeyUpInput(e: {
-    target: { tagName: string };
-    preventDefault: Function;
-    key: string;
-  }) {
-    if (e.target.tagName !== "INPUT") {
+  function onKeyUpInput (this: Window, e: KeyboardEvent) {
+    const target = e.target as HTMLInputElement;
+
+    if (target?.tagName !== 'INPUT') {
       e.preventDefault();
-      if(e.key===upKey){
+      if (e.key === upKey) {
         isArrowUp.value = false;
       }
-      if(e.key===downKey){
-        isArrowDown.value=false;
+      if (e.key === downKey) {
+        isArrowDown.value = false;
       }
       deleteKey(e.key);
     } else {
-      if (e.key === upKey || e.key === downKey || e.key === closeKey) {
-        e.preventDefault();
-
-        if(e.key===upKey){
+      if (e.key === upKey || e.key === downKey) {
+        if (e.key === upKey) {
           isArrowUp.value = false;
         }
-        if(e.key===downKey){
-          isArrowDown.value=false;
+        if (e.key === downKey) {
+          isArrowDown.value = false;
         }
-        deleteKey(e.key);
       }
+      e.preventDefault();
+      deleteKey(e.key);
     }
   }
 
-  function isCustomerKey(key: string) {
-    let isIn: boolean = false;
+  function isCustomerKey (key: string) {
+    let isIn = false;
     if (isCorrectKey(keys.value, key)) {
       isIn = true;
     }
@@ -88,49 +103,44 @@ export default function keysController(
     return isIn;
   }
 
-  function isCloseKey() {
-    let isIn: boolean = false;
+  function isCloseKey () {
+    let isIn = false;
 
     if (isCustomerKey(closeKey)) {
       isIn = true;
     }
-
     return isIn;
   }
 
-  function isDownKey() {
-    let isIn: boolean = false;
-    
+  function isDownKey () {
+    let isIn = false;
+
     if (isCustomerKey(downKey)) {
       isIn = true;
     }
-
     return isIn;
   }
 
-  function isUpKey() {
-    let isIn: boolean = false;
+  function isUpKey () {
+    let isIn = false;
 
     if (isCustomerKey(upKey)) {
       isIn = true;
     }
-
     return isIn;
   }
 
-  function isEnterKey() {
-    let isIn: boolean = false;
-
+  function isEnterKey () {
+    let isIn = false;
     if (isCustomerKey(enterKey)) {
       isIn = true;
     }
-
     return isIn;
   }
 
   onMounted(() => {
-    window.addEventListener("keydown", onKeyDownInput);
-    window.addEventListener("keyup", onKeyUpInput);
+    window.addEventListener('keydown', onKeyDownInput);
+    window.addEventListener('keyup', onKeyUpInput);
   });
 
   const keyCount = computed(() => {
@@ -139,36 +149,35 @@ export default function keysController(
 
   watch(keyCount, (value) => {
     if (value > 0) {
-      let isIn: boolean = false;
-
+      let isIn = false;
       if (isCustomerKey(modalKey)) {
         onModalChange(true);
         isIn = true;
       }
-
       if (isCloseKey()) {
         onModalChange(false);
         isIn = true;
       }
-      let isExecuted: boolean = false;
-      for (let i: number = 0; i < customerGroupCommands.length; ++i) {
-        if(isExecuted){
+      let isExecuted = false;
+      for (let i = 0; i < customerGroupCommands.value.length; ++i) {
+        if (isExecuted) {
           break;
         } else {
-          for (let j:number = 0; j < customerGroupCommands[i].getCommands().length;j ++){
-            if (isCustomerKey(customerGroupCommands[i].getCommands()[j].command.getCommandKey())) {
-              let action: Function = () => {};
-    
-              action = customerGroupCommands[i].getCommands()[j].command.getCommandAction();
-    
+          for (
+            let j = 0;
+            j < customerGroupCommands.value[i].getCommands().length;
+            j++
+          ) {
+            if (
+              isCustomerKey(
+                customerGroupCommands.value[i].getCommands()[j].command.getCommandKey(),
+              )
+            ) {
+              const action = customerGroupCommands.value[i].getCommands()[j].command.getCommandAction();
               action();
-    
               onModalChange(false);
-    
               isIn = true;
-              
               isExecuted = true;
-
               break;
             }
           }
@@ -208,6 +217,8 @@ export default function keysController(
     isCustomerKey,
     isCloseKey,
     isArrowDown,
-    isArrowUp
+    isArrowUp,
   };
-}
+};
+
+export default keysController;
