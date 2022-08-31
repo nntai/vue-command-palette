@@ -52,7 +52,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { PropType } from 'vue';
+import { PropType, watch } from 'vue';
 import GroupCommand from '../models/groupCommand';
 import CommandName from './CommandName.vue';
 import NoResult from './NoResult.vue';
@@ -113,7 +113,7 @@ const isCommandActive = (commandName: string) => {
 
 const {
   root, groupRef, groupNameRef, commandRef,
-} = scrollController(props.groupCommandIndex.groupCommandIndexValue, props.isArrowDown.isArrowDownValue, props.isArrowUp.isArrowUpValue);
+} = scrollController(props.groupCommandIndex.groupCommandIndexValue, props.isArrowDown.isArrowDownValue, props.isArrowUp.isArrowUpValue, props.isDisplayByGroup);
 
 const onCommandClick = (customerCommand: { command: Command }) => {
   customerCommand.command.getCommandAction()();

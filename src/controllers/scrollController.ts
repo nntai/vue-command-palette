@@ -5,7 +5,8 @@ import GroupCommand from "../models/groupCommand";
 export default function scrollController(
   groupCommandIndex: Ref<{ groupIndex: number; index: number }>,
   isArrowDown: Ref<boolean>,
-  isArrowUp: Ref<boolean>
+  isArrowUp: Ref<boolean>,
+  isDisplayByGroup: boolean
 ) {
   const root: Ref<HTMLElement | null> = ref(null);
   const groupRef: Ref<HTMLElement[] | null> = ref(null);
@@ -21,8 +22,10 @@ export default function scrollController(
           for (let i: number = 0; i < value.groupIndex; i++) {
             totalLength += groupRef.value[i].clientHeight + 10;
           }
-          if (groupNameRef.value !== null) {
-            totalLength += groupNameRef.value[value.groupIndex].clientHeight;
+          if (!isDisplayByGroup) {
+            if (groupNameRef.value !== null) {
+              totalLength += groupNameRef.value[value.groupIndex].clientHeight;
+            }
           }
           for (let i: number = 0; i < value.index + 1; i++) {
             totalLength += commandRef.value![i].clientHeight + 10;
@@ -41,8 +44,10 @@ export default function scrollController(
           for (let i: number = 0; i < value.groupIndex; i++) {
             totalLength += groupRef.value[i].clientHeight + 10;
           }
-          if (groupNameRef.value !== null) {
-            totalLength += groupNameRef.value[value.groupIndex].clientHeight;
+          if (!isDisplayByGroup) {
+            if (groupNameRef.value !== null) {
+              totalLength += groupNameRef.value[value.groupIndex].clientHeight;
+            }
           }
           for (let i: number = 0; i < value.index; i++) {
             totalLength += commandRef.value![i].clientHeight + 10;
