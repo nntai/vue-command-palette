@@ -1,17 +1,15 @@
 # Vue-Command-Palette
 
-[Demo](Link.com)
-
 > Command Palette Component For Vue3
 ## Demo
 
-## Installization
-
+[Demo Website](https://cmp-demo.vercel.app)
+## Getting Started
+It's recommended to install command-palette-vue3 via npm 
 ```bash
  $ npm install command-palette-vue3 --save
 ```
-
-## Usage
+This is the example show how you can intergrate command-palette-vue3
 
 ```html
 <script>
@@ -62,13 +60,10 @@
 | isDisplayByGroup        | option to display by group or not                | `boolean`                                        | false                   |
 
 ### Object
-```object
+```js
 return [
     {groupName:"Default",
     commands:[
-      {commandName:"Switch Light/Dark Theme", 
-      commandKey:"Control+m", 
-      commandAction:() => {changeTheme();}},
       {commandName:"Test Command", 
       commandKey:"Control+Shift+m", 
       commandAction:() => {alert("Test Command excecute.")}},
@@ -76,13 +71,13 @@ return [
   ];
 });
 ```
+| Name            | Description                                                                            |
+| --------------- | -------------------------------------------------------------------------------------- |
+| groupName       | Name of the Command Group                                                              |
+| commandName     | Name of the Command                                                                    |
+| commandKey      | Keys to execute Command                                                                |
+| commandAction   | Action the command with execute                                                        |
 
-
-### Events
-
-| Name            | Description                                                                            | Callback Arguments                                     |
-| --------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| default         | When the value change(v-model:value event)                                             | default                                                |
 
 ### Slots
 | Name          | Description                  |
